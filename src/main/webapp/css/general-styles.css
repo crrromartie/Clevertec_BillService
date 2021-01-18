@@ -1,0 +1,76 @@
+@font-face {
+    font-family: 'Ubuntu';
+    src: url("../fonts/AnyConv.com__Ubuntu-Light.woff2"),
+    url("../fonts/Ubuntu-Light.woff");
+    font-weight: 300;
+    font-display: swap;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Ubuntu';
+    src: url("../fonts/AnyConv.com__Ubuntu-Medium.woff2"),
+    url("../fonts/Ubuntu-Medium.woff");
+    font-weight: 400;
+    font-display: swap;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Ubuntu';
+    src: url("../fonts/AnyConv.com__Ubuntu-Regular.woff2"),
+    url("../fonts/Ubuntu-Regular.woff");
+    font-weight: 500;
+    font-display: swap;
+    font-style: normal;
+}
+
+html,
+body {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1;
+    height: 100%;
+    font-family: 'Ubuntu';
+    font-weight: 400;
+}
+
+.container {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.footer {
+    background: #e6e6e6;
+    width: 100%;
+    height: 50px;
+    font-size: 17px;
+}
+
+.footer-content {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header {
+    background: #e6e6e6;
+    width: 100%;
+    height: 100px;
+}
+
+.header a {
+    font-size: 16px;
+}
+
+.line {
+    width: 100%;
+    height: 8px;
+    background-color: #a292b3;
+}
+
+#but-prod {
+    font-family: 'Ubuntu';
+    font-size: 30px;
+}
