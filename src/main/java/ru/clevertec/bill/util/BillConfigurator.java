@@ -12,7 +12,7 @@ import org.apache.logging.log4j.Logger;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 
-import static ru.clevertec.bill.util.BillConfiguratorConstant.*;
+import static ru.clevertec.bill.util.BillConfiguratorConstants.*;
 
 public final class BillConfigurator {
     static Logger logger = LogManager.getLogger();
@@ -108,7 +108,6 @@ public final class BillConfigurator {
 
             bill.close();
         } catch (DocumentException e) {
-            e.printStackTrace();
             logger.log(Level.ERROR, e.getMessage());
         }
         return byteArrayOutputStream;

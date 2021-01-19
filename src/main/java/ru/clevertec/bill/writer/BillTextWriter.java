@@ -1,6 +1,6 @@
 package ru.clevertec.bill.writer;
 
-import ru.clevertec.bill.util.FilePath;
+import ru.clevertec.bill.util.FilePaths;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -18,7 +18,7 @@ public class BillTextWriter {
     public static boolean writeBill(String text) {
         DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
         String date = dateFormat.format(new Date());
-        String filePath = FilePath.BILL_PATH + date + FILE_FORMAT;
+        String filePath = FilePaths.BILL_PATH + date + FILE_FORMAT;
         try (FileWriter writer = new FileWriter(filePath, false)) {
             writer.write(text);
         } catch (IOException e) {

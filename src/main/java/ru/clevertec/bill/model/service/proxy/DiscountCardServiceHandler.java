@@ -29,8 +29,7 @@ public class DiscountCardServiceHandler implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        System.out.println(method.getName());
-        if(method.getName().equals(FIND_CARD_BY_NUMBER)){
+        if (method.getName().equals(FIND_CARD_BY_NUMBER)) {
             String log = createLog(method, args);
             logger.log(Level.DEBUG, log);
         }

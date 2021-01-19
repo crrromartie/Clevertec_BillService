@@ -1,6 +1,6 @@
 package ru.clevertec.bill.writer;
 
-import ru.clevertec.bill.util.FilePath;
+import ru.clevertec.bill.util.FilePaths;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.*;
@@ -33,7 +33,7 @@ public class BillPDFWriter {
     }
 
     public static boolean writeBillPDF(ByteArrayOutputStream byteArrayOutputStream) {
-        String filePath = FilePath.BILL_PATH + DATE + FILE_FORMAT;
+        String filePath = FilePaths.BILL_PATH + DATE + FILE_FORMAT;
         try (OutputStream outputStream = new FileOutputStream(filePath)) {
             byteArrayOutputStream.writeTo(outputStream);
         } catch (IOException e) {
@@ -44,14 +44,14 @@ public class BillPDFWriter {
     }
 
     public static boolean writeBillTemplatePDF(ByteArrayOutputStream byteArrayOutputStream) {
-        String filePath = FilePath.BILL_PATH_TEMPLATE + DATE + FILE_FORMAT;
+        String filePath = FilePaths.BILL_PATH_TEMPLATE + DATE + FILE_FORMAT;
         Document document = new Document();
         try {
             OutputStream outputStream = new FileOutputStream(filePath);
             PdfWriter writer = PdfWriter.getInstance(document, outputStream);
             document.open();
 
-            FileInputStream template = new FileInputStream(FilePath.TEMPLATE_PATH);
+            FileInputStream template = new FileInputStream(FilePaths.TEMPLATE_PATH);
             printLayer(writer, template);
 
             byte[] billByteArray = byteArrayOutputStream.toByteArray();
