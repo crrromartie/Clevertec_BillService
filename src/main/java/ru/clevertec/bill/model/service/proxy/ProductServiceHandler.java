@@ -21,7 +21,6 @@ public class ProductServiceHandler implements InvocationHandler {
     private static final String RESULT = "result=";
     private static final String VOID = "void";
 
-    private static final String FIND_PRODUCT_BY_ID = "findProductById";
     private static final String FIND_ALL = "findAll";
 
     public ProductServiceHandler(ProductService productService) {
@@ -30,8 +29,7 @@ public class ProductServiceHandler implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        if (method.getName().equals(FIND_PRODUCT_BY_ID)
-                || method.getName().equals(FIND_ALL)) {
+        if (method.getName().equals(FIND_ALL)) {
             String log = createLog(method, args);
             logger.log(Level.DEBUG, log);
         }

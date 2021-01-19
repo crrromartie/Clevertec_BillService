@@ -1,5 +1,7 @@
 package ru.clevertec.bill.model.service.Impl;
 
+import ru.clevertec.bill.annotations.LoggingAnnotation;
+import ru.clevertec.bill.annotations.LoggingLevel;
 import ru.clevertec.bill.entity.Product;
 import ru.clevertec.bill.exception.DaoException;
 import ru.clevertec.bill.exception.ServiceException;
@@ -25,6 +27,7 @@ public class ProductServiceImpl implements ProductService {
         return productList;
     }
 
+    @LoggingAnnotation(LoggingLevel.INFO)
     @Override
     public Optional<Product> findProductById(long id) throws ServiceException {
         Optional<Product> optionalProduct = Optional.empty();
