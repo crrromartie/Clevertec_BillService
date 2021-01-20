@@ -1,6 +1,6 @@
 package ru.clevertec.bill.util;
 
-public class FilePath {
+public class FilePaths {
     public static final String ORDER_FILE_PATH = "C:/Users/IGOR/IdeaProjects/Clevertec_BillService/order/order.txt";
     public static String BILL_PATH = "C:/Users/IGOR/IdeaProjects/Clevertec_BillService/bill/bill-";
     //(bill- + time + extension) - name file, generated in class
@@ -10,6 +10,6 @@ public class FilePath {
             "bill(template)-";
     //(bill(template)- + time + extension) - name file, generated in class
 
-    private FilePath() {
+    private FilePaths() {
     }
 }
