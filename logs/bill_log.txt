@@ -1,0 +1,12 @@
+2021-01-19T21:06:54,832 INFO  - ru.clevertec.bill.model.service.Impl.ProductServiceImpl findProductById args=[1] result={"value":{"productId":1,"name":"Snickers","price":9.0,"isPromotional":true}}
+2021-01-19T21:06:54,839 INFO  - ru.clevertec.bill.model.service.Impl.ProductServiceImpl findProductById args=[3] result={"value":{"productId":3,"name":"Mars","price":3.0,"isPromotional":true}}
+2021-01-19T21:06:54,841 INFO  - ru.clevertec.bill.model.service.Impl.ProductServiceImpl findProductById args=[4] result={"value":{"productId":4,"name":"KitKat","price":9.0,"isPromotional":false}}
+2021-01-19T21:06:54,843 INFO  - ru.clevertec.bill.model.service.Impl.ProductServiceImpl findProductById args=[7] result={"value":{"productId":7,"name":"Spartak","price":6.0,"isPromotional":true}}
+2021-01-19T21:06:54,845 INFO  - ru.clevertec.bill.model.service.Impl.ProductServiceImpl findProductById args=[12] result={"value":{"productId":12,"name":"Corny","price":4.0,"isPromotional":true}}
+2021-01-19T21:06:54,847 DEBUG - ru.clevertec.bill.model.service.DiscountCardService findCardByNumber args=[5566] result={"value":{"cardId":1,"cardNumber":5566,"discount":0.1}}
+2021-01-19T21:06:54,876 INFO  - ru.clevertec.bill.model.service.Impl.ProductServiceImpl findProductById args=[1] result={"value":{"productId":1,"name":"Snickers","price":9.0,"isPromotional":true}}
+2021-01-19T21:06:54,877 INFO  - ru.clevertec.bill.model.service.Impl.ProductServiceImpl findProductById args=[3] result={"value":{"productId":3,"name":"Mars","price":3.0,"isPromotional":true}}
+2021-01-19T21:06:54,879 INFO  - ru.clevertec.bill.model.service.Impl.ProductServiceImpl findProductById args=[4] result={"value":{"productId":4,"name":"KitKat","price":9.0,"isPromotional":false}}
+2021-01-19T21:06:54,880 INFO  - ru.clevertec.bill.model.service.Impl.ProductServiceImpl findProductById args=[7] result={"value":{"productId":7,"name":"Spartak","price":6.0,"isPromotional":true}}
+2021-01-19T21:06:54,882 INFO  - ru.clevertec.bill.model.service.Impl.ProductServiceImpl findProductById args=[12] result={"value":{"productId":12,"name":"Corny","price":4.0,"isPromotional":true}}
+2021-01-19T21:06:54,883 DEBUG - ru.clevertec.bill.model.service.DiscountCardService findCardByNumber args=[5566] result={"value":{"cardId":1,"cardNumber":5566,"discount":0.1}}

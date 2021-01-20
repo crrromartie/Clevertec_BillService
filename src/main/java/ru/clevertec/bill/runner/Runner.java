@@ -3,7 +3,7 @@ package ru.clevertec.bill.runner;
 import ru.clevertec.bill.util.BillMaker;
 import ru.clevertec.bill.builder.OrderBuilder;
 import ru.clevertec.bill.entity.Order;
-import ru.clevertec.bill.util.FilePath;
+import ru.clevertec.bill.util.FilePaths;
 import ru.clevertec.bill.writer.BillPDFWriter;
 import ru.clevertec.bill.writer.BillTextWriter;
 
@@ -11,9 +11,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 public class Runner {
-
     public static void main(String[] args) {
-        File file = new File(FilePath.ORDER_FILE_PATH);
+        File file = new File(FilePaths.ORDER_FILE_PATH);
 
         OrderBuilder orderBuilder = new OrderBuilder();
         Order order = orderBuilder.buildOrder(file);

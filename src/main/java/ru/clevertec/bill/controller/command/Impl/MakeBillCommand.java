@@ -55,7 +55,7 @@ public class MakeBillCommand implements Command {
             List<SinglePurchase> purchases = createSinglePurchases(purchaseParameters);
             session.setAttribute(AttributeName.PURCHASES, purchases);
 
-            double totalForPay = totalForPay(purchases);
+            double totalForPay = totalForPayCalculate(purchases);
             session.setAttribute(AttributeName.TOTAL_FOR_PAY, totalForPay);
 
             double totalPromoDiscount = totalPromoDiscountCalculate(purchases);
@@ -65,10 +65,10 @@ public class MakeBillCommand implements Command {
             if (!request.getParameter(ParameterName.CARD_NUMBER).isBlank()) {
                 cardNumber = Integer.parseInt(request.getParameter(ParameterName.CARD_NUMBER));
             }
-            double cardDiscountPercent = defineCardDiscountPercent(cardNumber);
+            double cardDiscountPercent = cardDiscountPercentDefine(cardNumber);
             session.setAttribute(AttributeName.CARD_DISCOUNT_PERCENT, (cardDiscountPercent * PERCENT_100));
 
-            double cardDiscount = calculateCardDiscount(totalForPay, cardDiscountPercent);
+            double cardDiscount = cardDiscountCalculate(totalForPay, cardDiscountPercent);
             session.setAttribute(AttributeName.CARD_DISCOUNT, cardDiscount);
 
             DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.ENGLISH);
@@ -130,7 +130,7 @@ public class MakeBillCommand implements Command {
         return totalPromoDiscount;
     }
 
-    private double totalForPay(List<SinglePurchase> purchases) {
+    private double totalForPayCalculate(List<SinglePurchase> purchases) {
         double totalForPay = 0.0;
         for (SinglePurchase singlePurchase : purchases) {
             totalForPay += singlePurchase.getTotal();
@@ -138,7 +138,7 @@ public class MakeBillCommand implements Command {
         return totalForPay;
     }
 
-    private double defineCardDiscountPercent(int curdNumber) throws ServiceException {
+    private double cardDiscountPercentDefine(int curdNumber) throws ServiceException {
         double cardDiscountPercent = 0.0;
         Optional<DiscountCard> discountCard = cardService.findCardByNumber(curdNumber);
         if (discountCard.isPresent()) {
@@ -147,7 +147,7 @@ public class MakeBillCommand implements Command {
         return cardDiscountPercent;
     }
 
-    private double calculateCardDiscount(double totalForPay, double cardDiscountPercent) {
+    private double cardDiscountCalculate(double totalForPay, double cardDiscountPercent) {
         double cardDiscount = 0.0;
         if (cardDiscountPercent > 0.0) {
             cardDiscount = totalForPay * cardDiscountPercent;

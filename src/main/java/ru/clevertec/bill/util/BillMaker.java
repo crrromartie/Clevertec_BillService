@@ -37,10 +37,10 @@ public final class BillMaker {
         String bill = null;
         try {
             List<SinglePurchase> singlePurchaseList = createSinglePurchases(order);
-            double cardDiscountPercent = defineCardDiscountPercent(order);
-            double totalForPay = totalForPay(singlePurchaseList);
+            double cardDiscountPercent = cardDiscountPercentDefine(order);
+            double totalForPay = totalForPayCalculate(singlePurchaseList);
             double promoDiscount = totalPromoDiscountCalculate(singlePurchaseList);
-            double cardDiscount = calculateCardDiscount(totalForPay, cardDiscountPercent);
+            double cardDiscount = cardDiscountCalculate(totalForPay, cardDiscountPercent);
             DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.ENGLISH);
             bill = billConfigurator.configureBill(singlePurchaseList, cardDiscount, (cardDiscountPercent * PERCENT_100),
                     promoDiscount, totalForPay, dateFormat.format(new Date()));
@@ -54,10 +54,10 @@ public final class BillMaker {
         ByteArrayOutputStream byteArrayOutputStream = null;
         try {
             List<SinglePurchase> singlePurchaseList = createSinglePurchases(order);
-            double cardDiscountPercent = defineCardDiscountPercent(order);
-            double totalForPay = totalForPay(singlePurchaseList);
+            double cardDiscountPercent = cardDiscountPercentDefine(order);
+            double totalForPay = totalForPayCalculate(singlePurchaseList);
             double promoDiscount = totalPromoDiscountCalculate(singlePurchaseList);
-            double cardDiscount = calculateCardDiscount(totalForPay, cardDiscountPercent);
+            double cardDiscount = cardDiscountCalculate(totalForPay, cardDiscountPercent);
             DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.ENGLISH);
             byteArrayOutputStream = billConfigurator.configurePDFBill(singlePurchaseList, cardDiscount,
                     (cardDiscountPercent * PERCENT_100), promoDiscount, totalForPay, dateFormat.format(new Date()));
@@ -115,7 +115,7 @@ public final class BillMaker {
         return totalPromoDiscount;
     }
 
-    private double totalForPay(List<SinglePurchase> purchases) {
+    private double totalForPayCalculate(List<SinglePurchase> purchases) {
         double totalForPay = 0.0;
         for (SinglePurchase singlePurchase : purchases) {
             totalForPay += singlePurchase.getTotal();
@@ -123,7 +123,7 @@ public final class BillMaker {
         return totalForPay;
     }
 
-    private double defineCardDiscountPercent(Order order) throws ServiceException {
+    private double cardDiscountPercentDefine(Order order) throws ServiceException {
         double cardDiscountPercent = 0.0;
         Optional<DiscountCard> discountCard = cardService.findCardByNumber(order.getCurdNumber());
         if (discountCard.isPresent()) {
@@ -132,7 +132,7 @@ public final class BillMaker {
         return cardDiscountPercent;
     }
 
-    private double calculateCardDiscount(double totalForPay, double cardDiscountPercent) {
+    private double cardDiscountCalculate(double totalForPay, double cardDiscountPercent) {
         double cardDiscount = 0.0;
         if (cardDiscountPercent > 0.0) {
             cardDiscount = totalForPay * cardDiscountPercent;

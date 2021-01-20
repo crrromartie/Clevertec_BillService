@@ -1,6 +1,6 @@
 package ru.clevertec.bill.util;
 
-class BillConfiguratorConstant {
+class BillConfiguratorConstants {
     public static final String CASH_RECEIPT = "CASH RECEIPT";
     public static final String SHOP_NAME = "\"CandyShop\"";
     public static final String CASHIER = "CASHIER #5";
@@ -34,6 +34,6 @@ class BillConfiguratorConstant {
     public static final float LEADING_160 = 160.0f;
     public static final float LEADING_30 = 30.0f;
 
-    private BillConfiguratorConstant() {
+    private BillConfiguratorConstants() {
     }
 }

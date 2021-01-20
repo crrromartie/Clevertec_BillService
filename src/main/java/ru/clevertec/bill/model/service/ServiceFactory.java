@@ -2,6 +2,10 @@ package ru.clevertec.bill.model.service;
 
 import ru.clevertec.bill.model.service.Impl.DiscountCardServiceImpl;
 import ru.clevertec.bill.model.service.Impl.ProductServiceImpl;
+import ru.clevertec.bill.model.service.proxy.DiscountCardServiceHandler;
+import ru.clevertec.bill.model.service.proxy.ProductServiceHandler;
+
+import java.lang.reflect.Proxy;
 
 public class ServiceFactory {
     private static final ServiceFactory INSTANCE = new ServiceFactory();
@@ -17,10 +21,16 @@ public class ServiceFactory {
     }
 
     public ProductService getProductService() {
-        return productService;
+        ClassLoader productServiceClassLoader = productService.getClass().getClassLoader();
+        Class<?>[] productServiceInterfaces = productService.getClass().getInterfaces();
+        return (ProductService) Proxy.newProxyInstance(productServiceClassLoader,
+                productServiceInterfaces, new ProductServiceHandler(productService));
     }
 
     public DiscountCardService getDiscountCardService() {
-        return discountCardService;
+        ClassLoader discountCardServiceClassLoader = discountCardService.getClass().getClassLoader();
+        Class<?>[] discountCardServiceInterfaces = discountCardService.getClass().getInterfaces();
+        return (DiscountCardService) Proxy.newProxyInstance(discountCardServiceClassLoader,
+                discountCardServiceInterfaces, new DiscountCardServiceHandler(discountCardService));
     }
 }
