@@ -1,47 +1,52 @@
 package ru.clevertec.bill.entity;
 
+import java.math.BigDecimal;
 import java.util.StringJoiner;
 
 public class SinglePurchase extends Entity {
+    private long singlePurchaseId;
     private Product product;
     private int quantity;
-    private double total;
-    private double promoDiscount;
+    private BigDecimal total;
+    private BigDecimal promoDiscount;
 
-    {
-        promoDiscount = 0.0;
+    public SinglePurchase() {
     }
 
-    public double getTotal() {
-        return total;
-    }
-
-    public void setTotal(double total) {
+    public SinglePurchase(long singlePurchaseId,
+                          Product product,
+                          int quantity,
+                          BigDecimal total,
+                          BigDecimal promoDiscount) {
+        this.singlePurchaseId = singlePurchaseId;
+        this.product = product;
+        this.quantity = quantity;
         this.total = total;
+        this.promoDiscount = promoDiscount;
+    }
+
+    public long getSinglePurchaseId() {
+        return singlePurchaseId;
+    }
+
+    public void setSinglePurchaseId(long singlePurchaseId) {
+        this.singlePurchaseId = singlePurchaseId;
     }
 
     public Product getProduct() {
         return product;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
     public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public BigDecimal getTotal() {
+        return total;
     }
 
-    public double getPromoDiscount() {
+    public BigDecimal getPromoDiscount() {
         return promoDiscount;
-    }
-
-    public void setPromoDiscount(double promoDiscount) {
-        this.promoDiscount = promoDiscount;
     }
 
     @Override
@@ -52,35 +57,36 @@ public class SinglePurchase extends Entity {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        SinglePurchase purchase = (SinglePurchase) o;
-        if (quantity != purchase.quantity) {
+        SinglePurchase that = (SinglePurchase) o;
+        if (singlePurchaseId != that.singlePurchaseId) {
             return false;
         }
-        if (Double.compare(purchase.total, total) != 0) {
+        if (quantity != that.quantity) {
             return false;
         }
-        if (Double.compare(purchase.promoDiscount, promoDiscount) != 0) {
+        if (product != null ? !product.equals(that.product) : that.product != null) {
             return false;
         }
-        return product != null ? product.equals(purchase.product) : purchase.product == null;
+        if (total != null ? !total.equals(that.total) : that.total != null) {
+            return false;
+        }
+        return promoDiscount != null ? promoDiscount.equals(that.promoDiscount) : that.promoDiscount == null;
     }
 
     @Override
     public int hashCode() {
-        int result;
-        long temp;
-        result = product != null ? product.hashCode() : 0;
+        int result = (int) (singlePurchaseId ^ (singlePurchaseId >>> 32));
+        result = 31 * result + (product != null ? product.hashCode() : 0);
         result = 31 * result + quantity;
-        temp = Double.doubleToLongBits(total);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(promoDiscount);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (total != null ? total.hashCode() : 0);
+        result = 31 * result + (promoDiscount != null ? promoDiscount.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
         return new StringJoiner(", ", SinglePurchase.class.getSimpleName() + "[", "]")
+                .add("singlePurchaseId=" + singlePurchaseId)
                 .add("product=" + product)
                 .add("quantity=" + quantity)
                 .add("total=" + total)

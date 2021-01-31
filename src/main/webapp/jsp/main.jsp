@@ -20,23 +20,24 @@
 <jsp:include page="${pageContext.request.contextPath}/jsp/include/header.jsp"/>
 <c:if test="${products == null}">
     <br/>
-    <form name="viewOrderForm" action="${pageContext.request.contextPath}/CandyShop" method="post">
-        <input type="hidden" name="command" value="view_products"/>
+    <form name="ViewOrder" action="${pageContext.request.contextPath}/CandyShop" method="post">
+        <input type="hidden" name="command" value="show_products"/>
         <button id="but-prod" type="submit">
             <fmt:message key="main.show.product.list"/>
         </button>
     </form>
 </c:if>
 <c:if test="${products != null}">
-    <form name="orderForm" action="${pageContext.request.contextPath}/CandyShop" method="post">
+    <form name="OrderForm" action="${pageContext.request.contextPath}/CandyShop" method="post">
         <input type="hidden" name="command" value="make_bill"/>
         <h2><fmt:message key="main.page.product.list"/></h2>
         <h4><fmt:message key="main.page.promo.text"/></h4>
         <c:forEach var="product" items="${products}">
             <label>${product.getName()}</label>
-            <c:if test="${product.isPromotional()}">
+            <c:if test="${product.isPromo()}">
                 <label>*</label>
             </c:if>
+            <label>${String.format("%1.2f",product.getPrice())}</label>
             <input type="text"
                    name="${product.getProductId()}"
                    title="<fmt:message key="main.enter.quantity"/>"

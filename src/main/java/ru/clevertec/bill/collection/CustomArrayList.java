@@ -5,6 +5,7 @@ import java.util.*;
 public class CustomArrayList<E> implements List<E>, Iterable<E> {
     private E[] values;
 
+    @SuppressWarnings("unchecked")
     public CustomArrayList() {
         values = (E[]) new Object[0];
     }
@@ -14,6 +15,7 @@ public class CustomArrayList<E> implements List<E>, Iterable<E> {
         return values.length;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public boolean add(E e) {
         E[] temp = values;
@@ -50,6 +52,12 @@ public class CustomArrayList<E> implements List<E>, Iterable<E> {
         return (counter > 0);
     }
 
+    @Override
+    public Object[] toArray() {
+        return Arrays.copyOf(values, size());
+    }
+
+    @SuppressWarnings("unchecked")
     public void delete(int index) {
         if (index >= 0 && index < values.length) {
             E[] temp = values;
@@ -65,22 +73,21 @@ public class CustomArrayList<E> implements List<E>, Iterable<E> {
         }
     }
 
-    @Override
-    public Object[] toArray() {
-        return Arrays.copyOf(values, size());
-    }
-
     public void update(int index, E e) {
         values[index] = e;
     }
+
+    /**
+     * Iterator
+     */
 
     public Iterator<E> iterator() {
         return new ArrayIterator<>(values);
     }
 
-    class ArrayIterator<E> implements Iterator<E> {
+    static class ArrayIterator<E> implements Iterator<E> {
         private int index = 0;
-        private E[] values;
+        private final E[] values;
 
         public ArrayIterator(E[] values) {
             this.values = values;

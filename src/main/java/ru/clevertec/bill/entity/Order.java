@@ -1,32 +1,32 @@
 package ru.clevertec.bill.entity;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.StringJoiner;
 
-public class Order {
-    private Map<Integer, Integer> purchaseParameters;
-    private int curdNumber;
+public class Order extends Entity {
+    private long orderId;
+    private Map<Long, Integer> purchaseParameters;
+    private int cardNumber;
 
-    {
-        purchaseParameters = new HashMap<>();
-        curdNumber = 0;
+    public Order() {
     }
 
-    public Map<Integer, Integer> getPurchaseParameters() {
+    public Order(long orderId, Map<Long, Integer> purchaseParameters, int cardNumber) {
+        this.orderId = orderId;
+        this.purchaseParameters = purchaseParameters;
+        this.cardNumber = cardNumber;
+    }
+
+    public long getOrderId() {
+        return orderId;
+    }
+
+    public Map<Long, Integer> getPurchaseParameters() {
         return purchaseParameters;
     }
 
-    public void setPurchaseParameters(Map<Integer, Integer> purchaseParameters) {
-        this.purchaseParameters = purchaseParameters;
-    }
-
-    public int getCurdNumber() {
-        return curdNumber;
-    }
-
-    public void setCurdNumber(int curdNumber) {
-        this.curdNumber = curdNumber;
+    public int getCardNumber() {
+        return cardNumber;
     }
 
     @Override
@@ -38,25 +38,29 @@ public class Order {
             return false;
         }
         Order order = (Order) o;
-        if (curdNumber != order.curdNumber) {
+        if (orderId != order.orderId) {
             return false;
         }
-        return purchaseParameters != null ? purchaseParameters.equals(order.purchaseParameters)
-                : order.purchaseParameters == null;
+        if (cardNumber != order.cardNumber) {
+            return false;
+        }
+        return purchaseParameters != null ? purchaseParameters.equals(order.purchaseParameters) : order.purchaseParameters == null;
     }
 
     @Override
     public int hashCode() {
-        int result = purchaseParameters != null ? purchaseParameters.hashCode() : 0;
-        result = 31 * result + curdNumber;
+        int result = (int) (orderId ^ (orderId >>> 32));
+        result = 31 * result + (purchaseParameters != null ? purchaseParameters.hashCode() : 0);
+        result = 31 * result + cardNumber;
         return result;
     }
 
     @Override
     public String toString() {
         return new StringJoiner(", ", Order.class.getSimpleName() + "[", "]")
+                .add("orderId=" + orderId)
                 .add("purchaseParameters=" + purchaseParameters)
-                .add("curdNumber=" + curdNumber)
+                .add("cardNumber=" + cardNumber)
                 .toString();
     }
 }

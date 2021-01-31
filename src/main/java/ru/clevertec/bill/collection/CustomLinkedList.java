@@ -12,6 +12,17 @@ public class CustomLinkedList<E> implements List<E>, Iterable<E> {
         this.firstNode = new Node<>(null, null, lastNode);
     }
 
+    @Override
+    public Object[] toArray() {
+        Object[] result = new Object[size];
+        if (size > 0) {
+            for (int i = 0; i < size; i++) {
+                result[i] = get(i);
+            }
+        }
+        return Arrays.copyOf(result, size());
+    }
+
     public int size() {
         return size;
     }
@@ -269,11 +280,6 @@ public class CustomLinkedList<E> implements List<E>, Iterable<E> {
     /**
      * Unsupported list methods
      */
-
-    @Override
-    public Object[] toArray() {
-        throw new UnsupportedOperationException("Method not supported!");
-    }
 
     @Override
     public <T> T[] toArray(T[] a) {

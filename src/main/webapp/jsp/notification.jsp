@@ -38,11 +38,11 @@
     <p><fmt:message key="notification.change.price"/></p>
 </c:if>
 
-<c:if test="${promoYes}">
+<c:if test="${makePromo}">
     <p><fmt:message key="notification.promo.yes"/></p>
 </c:if>
 
-<c:if test="${promoNo}">
+<c:if test="${removePromo}">
     <p><fmt:message key="notification.promo.no"/></p>
 </c:if>
 

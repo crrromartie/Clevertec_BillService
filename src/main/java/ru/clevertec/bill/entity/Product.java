@@ -1,51 +1,38 @@
 package ru.clevertec.bill.entity;
 
+import java.math.BigDecimal;
 import java.util.StringJoiner;
 
 public class Product extends Entity {
     private long productId;
     private String name;
-    private double price;
-    private boolean isPromotional;
-
-    public Product(String name, double price) {
-        this.name = name;
-        this.price = price;
-    }
+    private BigDecimal price;
+    private boolean isPromo;
 
     public Product() {
+    }
+
+    public Product(long productId, String name, BigDecimal price, boolean isPromo) {
+        this.productId = productId;
+        this.name = name;
+        this.price = price;
+        this.isPromo = isPromo;
     }
 
     public long getProductId() {
         return productId;
     }
 
-    public void setProductId(long productId) {
-        this.productId = productId;
-    }
-
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public boolean isPromotional() {
-        return isPromotional;
-    }
-
-    public void setPromotional(boolean promotional) {
-        isPromotional = promotional;
+    public boolean isPromo() {
+        return isPromo;
     }
 
     @Override
@@ -60,24 +47,21 @@ public class Product extends Entity {
         if (productId != product.productId) {
             return false;
         }
-        if (Double.compare(product.price, price) != 0) {
+        if (isPromo != product.isPromo) {
             return false;
         }
-        if (isPromotional != product.isPromotional) {
+        if (name != null ? !name.equals(product.name) : product.name != null) {
             return false;
         }
-        return name != null ? name.equals(product.name) : product.name == null;
+        return price != null ? price.equals(product.price) : product.price == null;
     }
 
     @Override
     public int hashCode() {
-        int result;
-        long temp;
-        result = (int) (productId ^ (productId >>> 32));
+        int result = (int) (productId ^ (productId >>> 32));
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        temp = Double.doubleToLongBits(price);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + (isPromotional ? 1 : 0);
+        result = 31 * result + (price != null ? price.hashCode() : 0);
+        result = 31 * result + (isPromo ? 1 : 0);
         return result;
     }
 
@@ -85,9 +69,9 @@ public class Product extends Entity {
     public String toString() {
         return new StringJoiner(", ", Product.class.getSimpleName() + "[", "]")
                 .add("productId=" + productId)
-                .add("name=" + name)
+                .add("name='" + name + "'")
                 .add("price=" + price)
-                .add("isPromotional=" + isPromotional)
+                .add("isPromo=" + isPromo)
                 .toString();
     }
 }

@@ -4,10 +4,10 @@
     <Properties>
         <property name="log_dir">c:/Users/IGOR/IdeaProjects/Clevertec_BillService/logs</property>
         <property name="pattern_console">
-            %d{ABSOLUTE} %-5level - %msg%n
+            %d{ABSOLUTE} %-5level %logger{1} - %msg%n
         </property>
         <property name="pattern_text_file">
-            %d{ISO8601} %-5level - %msg%n
+            %d{ISO8601} %-5level %logger{} - %msg%n
         </property>
         <property name="pattern_log_dir">
             logs/${date:yyyy-MM-dd}%d{yyyy-MM-dd_HH-mm}_%i.log

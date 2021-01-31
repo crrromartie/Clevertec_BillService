@@ -16,31 +16,29 @@
 </head>
 <body>
 <jsp:include page="${pageContext.request.contextPath}/jsp/include/header.jsp"/>
-<form name="addCardForm" action="${pageContext.request.contextPath}/controller" method="post">
+<form name="AddCard" action="${pageContext.request.contextPath}/CandyShop" method="post">
     <label>
         <fmt:message key="card.page.add"/>
     </label>
     <br/><br/>
-    <input type="hidden" name="command" value="add_card"/>
+    <input type="hidden" name="command" value="add_discount_card"/>
     <input type="text" name="cardNumber" title="<fmt:message key="card.page.number"/>"
            pattern="\w{4}"
            size="25"
            placeholder="<fmt:message key="card.page.number"/>"
            required
     />
-    <br/>
-    <c:if test="${cardUnique}">
-        <fmt:message key="message.card.not.unique"/>
-    </c:if>
-    <br/>
-    <input type="text" name="discount" title="<fmt:message key="card.page.discount"/>"
-           pattern="^[0-9]*[.,]?[0-9]+$"
-           placeholder="<fmt:message key="card.page.discount"/>"
+    <br/><br/>
+    <input type="number" name="cardDiscountPercent" title="<fmt:message key="card.page.discount_percent"/>"
+           pattern="\d{2}$"
+           min="10"
+           max="60"
+           placeholder="<fmt:message key="card.page.discount_percent"/>"
            required
     />
     <br/>
     <c:if test="${incorrectCardData}">
-        <fmt:message key="message.incorrect.card.data"/>
+        <fmt:message key="card.incorrect.card.data"/>
     </c:if>
     <br/>
     <button type="submit">
@@ -50,21 +48,21 @@
 
 <br/>
 
-<form name="deleteCardForm" action="${pageContext.request.contextPath}/controller" method="post">
+<form name="DeleteCard" action="${pageContext.request.contextPath}/CandyShop" method="post">
     <label>
         <fmt:message key="card.page.delete"/>
     </label>
     <br/><br/>
-    <input type="hidden" name="command" value="delete_card"/>
+    <input type="hidden" name="command" value="delete_discount_card"/>
     <input type="text" name="cardNumber" title="<fmt:message key="card.page.number"/>"
-           pattern="\w{4}"
+<%--           pattern="\w{4}"--%>
            size="25"
            placeholder="<fmt:message key="card.page.number"/>"
            required
     />
     <br/>
     <c:if test="${incorrectCardData}">
-        <fmt:message key="message.incorrect.card.data"/>
+        <fmt:message key="card.incorrect.card.data"/>
     </c:if>
     <br/>
     <button type="submit">
@@ -74,12 +72,12 @@
 
 <br/>
 
-<form name="changeDiscountForm" action="${pageContext.request.contextPath}/controller" method="post">
+<form name="ChangeDiscount" action="${pageContext.request.contextPath}/CandyShop" method="post">
     <label>
         <fmt:message key="card.change.discount"/>
     </label>
     <br/><br/>
-    <input type="hidden" name="command" value="change_promo"/>
+    <input type="hidden" name="command" value="change_discount_percent"/>
     <input type="text" name="cardNumber" title="<fmt:message key="card.page.number"/>"
            pattern="\w{4}"
            size="25"
@@ -87,14 +85,16 @@
            required
     />
     <br/><br/>
-    <input type="text" name="discount" title="<fmt:message key="card.page.discount"/>"
-           pattern="^[0-9]*[.,]?[0-9]+$"
-           placeholder="<fmt:message key="card.page.discount"/>"
+    <input type="text" name="cardDiscountPercent" title="<fmt:message key="card.page.discount_percent"/>"
+           pattern="\d{2}$"
+           min="10"
+           max="60"
+           placeholder="<fmt:message key="card.page.discount_percent"/>"
            required
     />
     <br/>
     <c:if test="${incorrectCardData}">
-        <fmt:message key="message.incorrect.card.data"/>
+        <fmt:message key="card.incorrect.card.data"/>
     </c:if>
     <br/>
     <button type="submit">

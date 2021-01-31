@@ -33,8 +33,8 @@ class DBPropertiesManager {
             }
             properties.load(inputStream);
         } catch (IOException e) {
-            logger.log(Level.FATAL, "I/O error: " + e.getMessage());
-            throw new RuntimeException("I/O error: ", e);
+            logger.log(Level.FATAL, e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 

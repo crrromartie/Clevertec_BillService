@@ -121,6 +121,17 @@ class CustomArrayListTest {
     }
 
     @Test
+    void toArrayTest() {
+        fillList();
+
+        Object[] objects = customList.toArray();
+
+        boolean actual = objects.getClass().isArray();
+
+        assertTrue(actual);
+    }
+
+    @Test
     void deletePositiveTest() {
         fillList();
 
@@ -157,30 +168,6 @@ class CustomArrayListTest {
                 () -> {
                     customList.delete(-1);
                 });
-    }
-
-    @Test
-    void toArrayPositiveTest() {
-        fillList();
-
-        Object[] objects = customList.toArray();
-
-        boolean actual = objects.getClass().isArray();
-        boolean expected = true;
-
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    void toArrayNegativeTest() {
-        fillList();
-
-        Object[] objects = customList.toArray();
-
-        boolean actual = objects.getClass().isArray();
-        boolean unexpected = false;
-
-        assertNotEquals(unexpected, actual);
     }
 
     @Test

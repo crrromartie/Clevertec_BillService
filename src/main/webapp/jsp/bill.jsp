@@ -16,11 +16,11 @@
 </head>
 <body>
 <jsp:include page="${pageContext.request.contextPath}/jsp/include/header.jsp"/>
-<c:if test="${purchases != null}">
+<c:if test="${bill != null}">
     <p>CASH RECEIPT</p>
     <p>"CandyShop"</p>
     <p>Cashier #5</p>
-    <p>${date}</p>
+    <p>${bill.getDate()}</p>
     <table>
         <thead>
         <tr>
@@ -32,41 +32,45 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="purshase" items="${purchases}">
+        <c:forEach var="purshase" items="${bill.getSinglePurchases()}">
             <tr>
                 <td>${purshase.getQuantity()}</td>
                 <td>${purshase.getProduct().getName()}</td>
-                <td>${String.format("%.1f",purshase.getProduct().getPrice())}</td>
-                <td>${String.format("%.1f", purshase.getTotal())}</td>
-                <td>${String.format("%.1f", purshase.getPromoDiscount())}</td>
+                <td>${String.format("%.2f",purshase.getProduct().getPrice())}</td>
+                <td>${String.format("%.2f", purshase.getTotal())}</td>
+                <td>${String.format("%.2f", purshase.getPromoDiscount())}</td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
-    <p>PROMO DISCOUNT: ${String.format("%.1f",totalPromoDiscount)}</p>
+    <p>PROMO DISCOUNT: ${String.format("%.2f",bill.getPromoDiscount())}</p>
     <c:choose>
-        <c:when test="${cardDiscount != 0}">
-            <p>CARD DISCOUNT(${String.format("%.0f",cardDiscountPercent)}%): ${String.format("%.1f",cardDiscount)}</p>
+        <c:when test="${bill.getCardDiscountPercent() != 0}">
+            <p>CARD
+                DISCOUNT(${String.format("%d",bill.getCardDiscountPercent())}%): ${String.format("%.2f",getCardDiscount())}</p>
         </c:when>
         <c:otherwise>
             <p>NO DISCOUNT CARD</p>
         </c:otherwise>
     </c:choose>
-    <p>TOTAL FOR PAY: ${String.format("%.1f",totalForPay)}</p>
-    <form name="saveBillForm" action="${pageContext.request.contextPath}/CandyShop" method="post">
-        <input type="hidden" name="command" value="write_bill_txt"/>
+    <p>TOTAL FOR PAY: ${String.format("%.2f",bill.getTotalForPay())}</p>
+    <form name="SaveBill" action="${pageContext.request.contextPath}/CandyShop" method="post">
+        <input type="hidden" name="command" value="write_bill"/>
+        <input type="hidden" name="writing_format" value="txt">
         <button type="submit">
             <fmt:message key="bill.save.submit"/>
         </button>
     </form>
-    <form name="saveBillToPDFForm" action="${pageContext.request.contextPath}/CandyShop" method="post">
-        <input type="hidden" name="command" value="write_bill_pdf"/>
+    <form name="SaveBillToPDF" action="${pageContext.request.contextPath}/CandyShop" method="post">
+        <input type="hidden" name="command" value="write_bill"/>
+        <input type="hidden" name="writing_format" value="pdf">
         <button type="submit">
             <fmt:message key="bill.save.submit_pdf"/>
         </button>
     </form>
-    <form name="saveBillToPDFForm" action="${pageContext.request.contextPath}/CandyShop" method="post">
-        <input type="hidden" name="command" value="write_bill_pdf_template"/>
+    <form name="SaveBillToPDFTemplate" action="${pageContext.request.contextPath}/CandyShop" method="post">
+        <input type="hidden" name="command" value="write_bill"/>
+        <input type="hidden" name="writing_format" value="pdf_clevertec">
         <button type="submit">
             <fmt:message key="bill.save.submit_pdf_template"/>
         </button>

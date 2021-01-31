@@ -16,7 +16,7 @@
 </head>
 <body>
 <jsp:include page="${pageContext.request.contextPath}/jsp/include/header.jsp"/>
-<form name="addProductForm" action="${pageContext.request.contextPath}/controller" method="post">
+<form name="AddProduct" action="${pageContext.request.contextPath}/CandyShop" method="post">
     <label>
         <fmt:message key="product.page.add"/>
     </label>
@@ -27,19 +27,15 @@
            placeholder="<fmt:message key="product.page.name"/>"
            required
     />
-    <br/>
-    <c:if test="${nameUnique}">
-        <fmt:message key="message.name.not.unique"/>
-    </c:if>
-    <br/>
+    <br/><br/>
     <input type="text" name="price" title="<fmt:message key="product.page.price"/>"
-           pattern="\d{1,5}"
+           pattern="\d{1,2}[.,]\d{1,2}"
            placeholder="<fmt:message key="product.page.price"/>"
            required
     />
     <br/>
     <c:if test="${incorrectProductData}">
-        <fmt:message key="message.incorrect.product.data"/>
+        <fmt:message key="product.incorrect.product.data"/>
     </c:if>
     <br/>
     <button type="submit">
@@ -49,7 +45,7 @@
 
 <br/>
 
-<form name="deleteProductForm" action="${pageContext.request.contextPath}/controller" method="post">
+<form name="DeleteProduct" action="${pageContext.request.contextPath}/CandyShop" method="post">
     <label>
         <fmt:message key="product.page.delete"/>
     </label>
@@ -62,7 +58,7 @@
     />
     <br/>
     <c:if test="${incorrectProductData}">
-        <fmt:message key="message.incorrect.product.data"/>
+        <fmt:message key="product.incorrect.product.data"/>
     </c:if>
     <br/>
     <button type="submit">
@@ -72,7 +68,7 @@
 
 <br/>
 
-<form name="changePriceForm" action="${pageContext.request.contextPath}/controller" method="post">
+<form name="ChangePrice" action="${pageContext.request.contextPath}/CandyShop" method="post">
     <label>
         <fmt:message key="product.change.price"/>
     </label>
@@ -85,13 +81,13 @@
     />
     <br/><br/>
     <input type="text" name="price" title="<fmt:message key="product.page.price"/>"
-           pattern="\d{1,5}"
+           pattern="\d{1,2}[.,]\d{1,2}"
            placeholder="<fmt:message key="product.page.price"/>"
            required
     />
     <br/>
     <c:if test="${incorrectProductData}">
-        <fmt:message key="message.incorrect.product.data"/>
+        <fmt:message key="product.incorrect.product.data"/>
     </c:if>
     <br/>
     <button type="submit">
@@ -101,12 +97,12 @@
 
 <br/>
 
-<form name="makePromoForm" action="${pageContext.request.contextPath}/controller" method="post">
+<form name="MakePromo" action="${pageContext.request.contextPath}/CandyShop" method="post">
     <label>
         <fmt:message key="product.make.promo"/>
     </label>
     <br/><br/>
-    <input type="hidden" name="command" value="promo_yes"/>
+    <input type="hidden" name="command" value="make_promo"/>
     <input type="text" name="name" title="<fmt:message key="product.page.name"/>"
            pattern="\w{3,30}"
            placeholder="<fmt:message key="product.page.name"/>"
@@ -114,7 +110,7 @@
     />
     <br/>
     <c:if test="${incorrectProductData}">
-        <fmt:message key="message.incorrect.product.data"/>
+        <fmt:message key="product.incorrect.product.data"/>
     </c:if>
     <br/>
     <button type="submit">
@@ -124,12 +120,12 @@
 
 <br/>
 
-<form name="makeNoPromoForm" action="${pageContext.request.contextPath}/controller" method="post">
+<form name="RemovePromo" action="${pageContext.request.contextPath}/CandyShop" method="post">
     <label>
         <fmt:message key="product.no.promo"/>
     </label>
     <br/><br/>
-    <input type="hidden" name="command" value="promo_no"/>
+    <input type="hidden" name="command" value="remove_promo"/>
     <input type="text" name="name" title="<fmt:message key="product.page.name"/>"
            pattern="\w{3,30}"
            placeholder="<fmt:message key="product.page.name"/>"
@@ -137,7 +133,7 @@
     />
     <br/>
     <c:if test="${incorrectProductData}">
-        <fmt:message key="message.incorrect.product.data"/>
+        <fmt:message key="product.incorrect.product.data"/>
     </c:if>
     <br/>
     <button type="submit">

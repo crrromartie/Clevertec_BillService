@@ -25,7 +25,7 @@ class ConnectionCreator {
             connection = DriverManager.getConnection(DATABASE_URL, DATABASE_USER, DATABASE_PASSWORD);
             proxyConnection = new ProxyConnection(connection);
         } catch (SQLException e) {
-            logger.log(Level.FATAL, "Connection not created!", e.getMessage());
+            logger.log(Level.FATAL, e.getMessage());
             throw new RuntimeException("Connection not created!", e);
         }
         return proxyConnection;

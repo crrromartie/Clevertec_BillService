@@ -7,7 +7,7 @@ import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
 public class SessionListenerImpl implements HttpSessionListener {
-    private final static String EN_LANG = "en";
+    private static final String EN_LANG = "en";
 
     @Override
     public void sessionCreated(HttpSessionEvent se) {

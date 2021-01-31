@@ -8,64 +8,67 @@ import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import ru.clevertec.bill.annotations.LoggingAnnotation;
-import ru.clevertec.bill.annotations.LoggingLevel;
+import ru.clevertec.bill.annotation.LoggingAnnotation;
+import ru.clevertec.bill.annotation.LoggingLevel;
 import ru.clevertec.bill.parser.CustomJsonParser;
-import ru.clevertec.bill.parser.CustomJsonParserImpl;
+import ru.clevertec.bill.parser.impl.CustomJsonParserImpl;
 
 @Aspect
 public class LoggingAspect {
-    static Logger logger = LogManager.getLogger();
+    private static final String EMPTY_STRING = "";
 
-    private static final String SPACE = " ";
-    private static final String ARGS = "args=";
-    private static final String RESULT = "result=";
-    private static final String VOID = "void";
-
-    @Pointcut("execution(@ru.clevertec.bill.annotations.* * *(..))")
+    @Pointcut("execution(@ru.clevertec.bill.annotation.* * *(..))")
     private void methodToBeProfiled() {
     }
 
     @AfterReturning(pointcut = "methodToBeProfiled()", returning = "o")
     public void loginParameters(JoinPoint joinPoint, Object o) throws IllegalAccessException {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
-        String log = createLog(joinPoint, o);
         LoggingAnnotation annotation = (LoggingAnnotation) methodSignature.getMethod().getAnnotation(LoggingAnnotation.class);
         LoggingLevel level = (LoggingLevel) annotation.value();
-        switch (level) {
-            case OFF -> logger.log(Level.OFF, log);
-            case FATAL -> logger.log(Level.FATAL, log);
-            case ERROR -> logger.log(Level.ERROR, log);
-            case WARN -> logger.log(Level.WARN, log);
-            case INFO -> logger.log(Level.INFO, log);
-            case DEBUG -> logger.log(Level.DEBUG, log);
-            case TRACE -> logger.log(Level.TRACE, log);
-            case ALL -> logger.log(Level.ALL, log);
-        }
-    }
-
-    private String createLog(JoinPoint joinPoint, Object o) throws IllegalAccessException {
-        StringBuilder log = new StringBuilder();
+        Logger logger = LogManager.getLogger(joinPoint.getTarget());
         CustomJsonParser parser = new CustomJsonParserImpl();
-        MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
-        String methodName = methodSignature.getName();
-        String methodClassName = joinPoint.getSignature().getDeclaringTypeName();
-        log.append(methodClassName)
-                .append(SPACE);
-        log.append(methodName)
-                .append(SPACE)
-                .append(ARGS);
+        String args = EMPTY_STRING;
         if (joinPoint.getArgs() != null) {
-            log.append(parser.parseToJson(joinPoint.getArgs()));
+            parser.parseToJson(joinPoint.getArgs());
         }
-        log.append(SPACE)
-                .append(RESULT);
-        String returnType = o.getClass().getSimpleName();
-        if (!returnType.equals(void.class.getSimpleName())) {
-            log.append(parser.parseToJson(o));
-        } else {
-            log.append(VOID);
+        String result = EMPTY_STRING;
+        if (!o.getClass().getSimpleName().equals(void.class.getSimpleName())) {
+            result = parser.parseToJson(o);
         }
-        return log.toString();
+        switch (level) {
+            case OFF -> {
+                logger.log(Level.OFF, "{} args={}", methodSignature.getName(), args);
+                logger.log(Level.OFF, "{} result={}", methodSignature.getName(), result);
+            }
+            case FATAL -> {
+                logger.log(Level.FATAL, "{} args={}", methodSignature.getName(), args);
+                logger.log(Level.FATAL, "{} result={}", methodSignature.getName(), result);
+            }
+            case ERROR -> {
+                logger.log(Level.ERROR, "{} args={}", methodSignature.getName(), args);
+                logger.log(Level.ERROR, "{} result={}", methodSignature.getName(), result);
+            }
+            case WARN -> {
+                logger.log(Level.WARN, "{} args={}", methodSignature.getName(), args);
+                logger.log(Level.WARN, "{} result={}", methodSignature.getName(), result);
+            }
+            case DEBUG -> {
+                logger.log(Level.DEBUG, "{} args={}", methodSignature.getName(), args);
+                logger.log(Level.DEBUG, "{} result={}", methodSignature.getName(), result);
+            }
+            case INFO -> {
+                logger.log(Level.INFO, "{} args={}", methodSignature.getName(), args);
+                logger.log(Level.INFO, "{} result={}", methodSignature.getName(), result);
+            }
+            case TRACE -> {
+                logger.log(Level.TRACE, "{} args={}", methodSignature.getName(), args);
+                logger.log(Level.TRACE, "{} result={}", methodSignature.getName(), result);
+            }
+            case ALL -> {
+                logger.log(Level.ALL, "{} args={}", methodSignature.getName(), args);
+                logger.log(Level.ALL, "{} result={}", methodSignature.getName(), result);
+            }
+        }
     }
 }

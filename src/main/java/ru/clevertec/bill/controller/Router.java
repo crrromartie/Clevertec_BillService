@@ -3,6 +3,7 @@ package ru.clevertec.bill.controller;
 import ru.clevertec.bill.controller.command.PagePath;
 
 public final class Router {
+
     enum Type {
         FORWARD,
         REDIRECT
@@ -36,6 +37,6 @@ public final class Router {
     }
 
     public void setRedirect() {
-        this.type = type.REDIRECT;
+        this.type = Type.REDIRECT;
     }
 }

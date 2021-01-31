@@ -10,6 +10,8 @@ import java.nio.channels.FileChannel;
 import java.nio.channels.ReadableByteChannel;
 
 public class DownloadPlugin implements Plugin<Project> {
+    private static final int POSITION_0 = 0;
+
     @Override
     public void apply(Project project) {
         DownloadPluginExtension extension = project.getExtensions().create("source", DownloadPluginExtension.class);
@@ -23,7 +25,7 @@ public class DownloadPlugin implements Plugin<Project> {
             try (ReadableByteChannel readableByteChannel = Channels.newChannel(url.openStream());
                  FileOutputStream fileOutputStream = new FileOutputStream(extension.getTargetFile());
                  FileChannel fileChannel = fileOutputStream.getChannel()) {
-                fileChannel.transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
+                fileChannel.transferFrom(readableByteChannel, POSITION_0, Long.MAX_VALUE);
             } catch (IOException e) {
                 e.printStackTrace();
             }

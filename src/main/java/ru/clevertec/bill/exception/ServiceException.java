@@ -1,6 +1,7 @@
 package ru.clevertec.bill.exception;
 
 public class ServiceException extends Exception {
+
     public ServiceException() {
     }
 

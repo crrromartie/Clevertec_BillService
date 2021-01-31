@@ -22,6 +22,17 @@ class CustomLinkedListTest {
     }
 
     @Test
+    void toArrayTest() {
+        fillList();
+
+        Object[] objects = customList.toArray();
+
+        boolean actual = objects.getClass().isArray();
+
+        assertTrue(actual);
+    }
+
+    @Test
     void sizePositiveTest() {
         fillList();
         int actual = customList.size();

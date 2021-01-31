@@ -15,8 +15,8 @@ public enum ConnectionPool {
 
     static Logger logger = LogManager.getLogger();
 
-    private BlockingQueue<ProxyConnection> freeConnections;
-    private BlockingQueue<ProxyConnection> activeConnections;
+    private final BlockingQueue<ProxyConnection> freeConnections;
+    private final BlockingQueue<ProxyConnection> activeConnections;
 
     private final int DEFAULT_POOL_SIZE = Integer.parseInt(DBPropertiesManager.getPoolSize());
     private final String DATABASE_DRIVER = DBPropertiesManager.getDriver();
@@ -36,7 +36,7 @@ public enum ConnectionPool {
             connection = freeConnections.take();
             activeConnections.put(connection);
         } catch (InterruptedException e) {
-            logger.log(Level.ERROR, "Exception during getting connection!", e.getMessage());
+            logger.log(Level.ERROR, e.getMessage());
             Thread.currentThread().interrupt();
         }
         return connection;
@@ -50,7 +50,7 @@ public enum ConnectionPool {
                     connection.setAutoCommit(true);
                 }
             } catch (SQLException e) {
-                logger.log(Level.ERROR, "Exception while setting autocommit - true!", e.getMessage());
+                logger.log(Level.ERROR, e.getMessage());
             }
             freeConnections.offer((ProxyConnection) connection);
         } else {
@@ -63,9 +63,9 @@ public enum ConnectionPool {
             try {
                 freeConnections.take().reallyClose();
             } catch (SQLException e) {
-                logger.log(Level.ERROR, "Exception during destroy pool!", e.getMessage());
+                logger.log(Level.ERROR, e.getMessage());
             } catch (InterruptedException e) {
-                logger.log(Level.ERROR, "Exception during destroy pool!", e.getMessage());
+                logger.log(Level.ERROR, e.getMessage());
                 Thread.currentThread().interrupt();
             }
         }
@@ -76,8 +76,8 @@ public enum ConnectionPool {
         try {
             Class.forName(DATABASE_DRIVER);
         } catch (ClassNotFoundException e) {
-            logger.log(Level.FATAL, "Driver not registered!", e.getMessage());
-            throw new RuntimeException("Driver not registered!", e);
+            logger.log(Level.FATAL, e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 
@@ -86,7 +86,7 @@ public enum ConnectionPool {
             try {
                 DriverManager.deregisterDriver(driver);
             } catch (SQLException e) {
-                logger.log(Level.ERROR, "Driver deregister error!", e.getMessage());
+                logger.log(Level.ERROR, e.getMessage());
             }
         });
     }

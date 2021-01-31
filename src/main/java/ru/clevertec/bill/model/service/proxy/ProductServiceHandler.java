@@ -1,25 +1,20 @@
 package ru.clevertec.bill.model.service.proxy;
 
+import com.google.gson.Gson;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ru.clevertec.bill.model.service.ProductService;
 import ru.clevertec.bill.parser.CustomJsonParser;
-import ru.clevertec.bill.parser.CustomJsonParserImpl;
+import ru.clevertec.bill.parser.impl.CustomJsonParserImpl;
 
 import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class ProductServiceHandler implements InvocationHandler {
-    static Logger logger = LogManager.getLogger();
+    private final ProductService productService;
 
-    private ProductService productService;
-
-    private static final String SPACE = " ";
-    private static final String ARGS = "args=";
-    private static final String RESULT = "result=";
-    private static final String VOID = "void";
+    private static final String EMPTY_STRING = "";
 
     private static final String FIND_ALL = "findAll";
 
@@ -29,35 +24,25 @@ public class ProductServiceHandler implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        Logger logger = LogManager.getLogger(method.getDeclaringClass().getCanonicalName());
+        CustomJsonParser parser = new CustomJsonParserImpl();
+        Gson gson = new Gson();
+        Object invoke = method.invoke(productService, args);
         if (method.getName().equals(FIND_ALL)) {
-            String log = createLog(method, args);
-            logger.log(Level.DEBUG, log);
+
+            String arguments = EMPTY_STRING;
+            if (args != null) {
+                arguments = parser.parseToJson(args);
+            }
+
+            String result = EMPTY_STRING;
+            if (invoke != null) {
+                result = parser.parseToJson(invoke);
+            }
+
+            logger.log(Level.DEBUG, "{} args={}", method.getName(), arguments);
+            logger.log(Level.DEBUG, "{} result={}", method.getName(), result);
         }
         return method.invoke(productService, args);
-    }
-
-    private String createLog(Method method, Object[] args) throws InvocationTargetException, IllegalAccessException {
-        StringBuilder log = new StringBuilder();
-        CustomJsonParser parser = new CustomJsonParserImpl();
-        Object invoke = method.invoke(productService, args);
-        String methodClassName = method.getDeclaringClass().getCanonicalName();
-        log.append(methodClassName)
-                .append(SPACE);
-        String methodName = method.getName();
-        log.append(methodName)
-                .append(SPACE)
-                .append(ARGS);
-        if (args != null) {
-            log.append(parser.parseToJson(args));
-        }
-        log.append(SPACE)
-                .append(RESULT);
-        String returnType = method.getReturnType().getSimpleName();
-        if (!returnType.equals(void.class.getSimpleName())) {
-            log.append(parser.parseToJson(invoke));
-        } else {
-            log.append(VOID);
-        }
-        return log.toString();
     }
 }

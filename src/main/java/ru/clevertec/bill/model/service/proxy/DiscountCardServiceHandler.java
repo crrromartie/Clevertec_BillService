@@ -5,23 +5,17 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ru.clevertec.bill.model.service.DiscountCardService;
 import ru.clevertec.bill.parser.CustomJsonParser;
-import ru.clevertec.bill.parser.CustomJsonParserImpl;
+import ru.clevertec.bill.parser.impl.CustomJsonParserImpl;
 
 import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class DiscountCardServiceHandler implements InvocationHandler {
-    static Logger logger = LogManager.getLogger();
+    private final DiscountCardService discountCardService;
 
-    private DiscountCardService discountCardService;
+    private static final String EMPTY_STRING = "";
 
-    private static final String SPACE = " ";
-    private static final String ARGS = "args=";
-    private static final String RESULT = "result=";
-    private static final String VOID = "void";
-
-    private static final String FIND_CARD_BY_NUMBER = "findCardByNumber";
+    private static final String FIND_BY_NUMBER = "findByNumber";
 
     public DiscountCardServiceHandler(DiscountCardService discountCardService) {
         this.discountCardService = discountCardService;
@@ -29,35 +23,24 @@ public class DiscountCardServiceHandler implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        if (method.getName().equals(FIND_CARD_BY_NUMBER)) {
-            String log = createLog(method, args);
-            logger.log(Level.DEBUG, log);
-        }
-        return method.invoke(discountCardService, args);
-    }
-
-    private String createLog(Method method, Object[] args) throws InvocationTargetException, IllegalAccessException {
-        StringBuilder log = new StringBuilder();
+        Logger logger = LogManager.getLogger(method.getDeclaringClass().getCanonicalName());
         CustomJsonParser parser = new CustomJsonParserImpl();
         Object invoke = method.invoke(discountCardService, args);
-        String methodClassName = method.getDeclaringClass().getCanonicalName();
-        log.append(methodClassName)
-                .append(SPACE);
-        String methodName = method.getName();
-        log.append(methodName)
-                .append(SPACE)
-                .append(ARGS);
-        if (args != null) {
-            log.append(parser.parseToJson(args));
+        if (method.getName().equals(FIND_BY_NUMBER)) {
+
+            String arguments = EMPTY_STRING;
+            if (args != null) {
+                arguments = parser.parseToJson(args);
+            }
+
+            String result = EMPTY_STRING;
+            if (invoke != null) {
+                result = parser.parseToJson(invoke);
+            }
+
+            logger.log(Level.DEBUG, "{} args={}", method.getName(), arguments);
+            logger.log(Level.DEBUG, "{} result={}", method.getName(), result);
         }
-        log.append(SPACE)
-                .append(RESULT);
-        String returnType = method.getReturnType().getSimpleName();
-        if (!returnType.equals(void.class.getSimpleName())) {
-            log.append(parser.parseToJson(invoke));
-        } else {
-            log.append(VOID);
-        }
-        return log.toString();
+        return method.invoke(discountCardService, args);
     }
 }

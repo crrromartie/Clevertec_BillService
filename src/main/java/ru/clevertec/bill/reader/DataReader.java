@@ -18,8 +18,8 @@ public final class DataReader {
         try {
             text = Files.readString(Paths.get(filePath));
         } catch (IOException e) {
-            logger.log(Level.FATAL, "File reading error!", e);
-            throw new RuntimeException("File not available, data not read!", e);
+            logger.log(Level.FATAL, "File reading error", e);
+            throw new RuntimeException("File not available, data not read", e);
         }
         return text;
     }
