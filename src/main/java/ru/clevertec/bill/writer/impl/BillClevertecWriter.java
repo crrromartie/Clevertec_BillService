@@ -10,6 +10,8 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ru.clevertec.bill.entity.Bill;
+import ru.clevertec.bill.observer.EventManager;
+import ru.clevertec.bill.observer.entity.State;
 import ru.clevertec.bill.util.BillConverter;
 import ru.clevertec.bill.util.FilePath;
 import ru.clevertec.bill.util.impl.BillConverterImpl;
@@ -25,15 +27,19 @@ public class BillClevertecWriter implements BillWriter {
 
     private static final String FILE_FORMAT = ".pdf";
     private static final String DATE_FORMAT = "dd-MM-yyyy_HH-mm-ss";
+
     private static final int PAGE_NUMBER_1 = 1;
     private static final float DEVIATION_X = 0.0f;
     private static final float DEVIATION_Y = 0.0f;
 
+    private final EventManager eventManager = new EventManager(State.PRINT_TXT,
+            State.PRINT_PDF, State.PRINT_CLEVERTEC);
+
     @Override
-    public boolean writeBill(Bill bill) {
+    public String writeBill(Bill bill) {
         DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
         String date = dateFormat.format(new Date());
-        String filePath = FilePath.BILL_PATH_TEMPLATE + date + FILE_FORMAT;
+        String filePath = FilePath.BILL_CLEVERTEC_PATH + date + FILE_FORMAT;
         Document document = new Document();
         BillConverter billConverter = new BillConverterImpl();
         FileInputStream templateInputStream = null;
@@ -43,7 +49,7 @@ public class BillClevertecWriter implements BillWriter {
             PdfWriter writer = PdfWriter.getInstance(document, outputStream);
             document.open();
 
-            templateInputStream = new FileInputStream(FilePath.TEMPLATE_PATH);
+            templateInputStream = new FileInputStream(FilePath.CLEVERTEC_TEMPLATE_PATH);
             printLayer(writer, templateInputStream);
 
             byte[] billByteArray = byteBill.toByteArray();
@@ -51,9 +57,9 @@ public class BillClevertecWriter implements BillWriter {
             printLayer(writer, billInputStream);
 
             document.close();
+            eventManager.notify(State.PRINT_CLEVERTEC, filePath);
         } catch (IOException | DocumentException e) {
             logger.log(Level.ERROR, e.getMessage());
-            return false;
         } finally {
             if (templateInputStream != null) {
                 try {
@@ -70,7 +76,7 @@ public class BillClevertecWriter implements BillWriter {
                 }
             }
         }
-        return true;
+        return filePath;
     }
 
     private void printLayer(PdfWriter writer, InputStream stream) throws IOException {
@@ -78,5 +84,10 @@ public class BillClevertecWriter implements BillWriter {
         PdfImportedPage page = writer.getImportedPage(reader, PAGE_NUMBER_1);
         PdfContentByte contentByte = writer.getDirectContent();
         contentByte.addTemplate(page, DEVIATION_X, DEVIATION_Y);
+    }
+
+    @Override
+    public EventManager getEventManager() {
+        return eventManager;
     }
 }

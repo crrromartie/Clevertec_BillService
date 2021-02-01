@@ -40,7 +40,8 @@ public class WriteBillCommand implements Command {
                 throw new IllegalStateException("Unexpected value: " + writingFormat);
             }
         }
-        session.setAttribute(AttributeName.SAVE_BILL, billWriter.writeBill(bill));
+        session.setAttribute(AttributeName.SAVE_BILL, true);
+        session.setAttribute(AttributeName.BILL_FILE_PATH, billWriter.writeBill(bill));
         return router;
     }
 }

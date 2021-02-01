@@ -1,8 +1,9 @@
 package ru.clevertec.bill.collection;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class CustomArrayList<E> implements List<E>, Iterable<E> {
+public class CustomArrayList<E> implements List<E>, Iterable<E>, Serializable {
     private E[] values;
 
     @SuppressWarnings("unchecked")

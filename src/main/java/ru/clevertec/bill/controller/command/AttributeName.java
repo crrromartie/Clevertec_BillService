@@ -4,6 +4,7 @@ public class AttributeName {
     //general
     public static final String CURRENT_PAGE = "currentPage";
     public static final String LANG = "lang";
+    public static final String BILL_FILE_PATH = "billFilePath";
     //product
     public static final String PRODUCTS = "products";
     //bill

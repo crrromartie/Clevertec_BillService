@@ -16,6 +16,7 @@ public class MainPassCommand implements Command {
         session.removeAttribute(AttributeName.PRODUCTS);
         session.removeAttribute(AttributeName.BILL);
         session.removeAttribute((AttributeName.SAVE_BILL));
+        session.removeAttribute(AttributeName.BILL_FILE_PATH);
         Router router = new Router();
         router.setPage(PagePath.MAIN_PAGE);
         return router;

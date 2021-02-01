@@ -1,8 +1,9 @@
 package ru.clevertec.bill.collection;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class CustomLinkedList<E> implements List<E>, Iterable<E> {
+public class CustomLinkedList<E> implements List<E>, Iterable<E>, Serializable {
     private Node<E> firstNode;
     private Node<E> lastNode;
     private int size = 0;

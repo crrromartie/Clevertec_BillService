@@ -47,7 +47,7 @@
     <c:choose>
         <c:when test="${bill.getCardDiscountPercent() != 0}">
             <p>CARD
-                DISCOUNT(${String.format("%d",bill.getCardDiscountPercent())}%): ${String.format("%.2f",getCardDiscount())}</p>
+                DISCOUNT(${String.format("%d",bill.getCardDiscountPercent())}%): ${String.format("%.2f",bill.getCardDiscount())}</p>
         </c:when>
         <c:otherwise>
             <p>NO DISCOUNT CARD</p>

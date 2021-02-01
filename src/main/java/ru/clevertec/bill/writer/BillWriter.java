@@ -1,8 +1,11 @@
 package ru.clevertec.bill.writer;
 
 import ru.clevertec.bill.entity.Bill;
+import ru.clevertec.bill.observer.EventManager;
 
 public interface BillWriter {
 
-    boolean writeBill(Bill bill);
+    String writeBill(Bill bill);
+
+    EventManager getEventManager();
 }
