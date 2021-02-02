@@ -13,34 +13,25 @@ import ru.clevertec.bill.writer.BillWriter;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 
 public class BillTextWriter implements BillWriter {
     static Logger logger = LogManager.getLogger();
-
-    private static final String FILE_FORMAT = ".txt";
-    private static final String DATE_FORMAT = "dd-MM-yyyy_HH-mm-ss";
 
     private final EventManager eventManager = new EventManager(State.PRINT_TXT,
             State.PRINT_PDF, State.PRINT_CLEVERTEC);
 
     @Override
     public String writeBill(Bill bill) {
-        DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
-        String date = dateFormat.format(new Date());
-        String filePath = FilePath.BILL_PATH + date + FILE_FORMAT;
         BillConverter billConverter = new BillConverterImpl();
         String billString = billConverter.convertBillToString(bill);
-        try (FileWriter writer = new FileWriter(filePath)) {
+        try (FileWriter writer = new FileWriter(FilePath.BILL_TXT_PATH)) {
             writer.write(billString);
-            eventManager.notify(State.PRINT_CLEVERTEC, filePath);
+            eventManager.notify(State.PRINT_CLEVERTEC, FilePath.BILL_TXT_PATH);
         } catch (IOException e) {
             logger.log(Level.ERROR, e.getMessage());
         }
-        return filePath;
+        return FilePath.BILL_TXT_PATH;
     }
 
     @Override

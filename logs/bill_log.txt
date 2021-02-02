@@ -12,3 +12,16 @@
 2021-02-01T19:15:42,878 DEBUG ru.clevertec.bill.model.service.ProductService - findAll result=[{"productId":2,"name":"Snickers","price":10,"isPromo":true},{"productId":3,"name":"Nuts","price":11,"isPromo":false},{"productId":4,"name":"Spartak","price":7.5,"isPromo":true},{"productId":5,"name":"Bounty","price":13.5,"isPromo":false},{"productId":6,"name":"KitKat","price":9,"isPromo":false},{"productId":7,"name":"MilkyWay","price":8,"isPromo":false},{"productId":9,"name":"Vitba","price":6.25,"isPromo":false},{"productId":1,"name":"Mars","price":13.5,"isPromo":false},{"productId":10,"name":"Smack","price":3,"isPromo":true}]
 2021-02-01T19:15:42,934 DEBUG ru.clevertec.bill.model.service.DiscountCardService - findByNumber args=[1111]
 2021-02-01T19:15:42,934 DEBUG ru.clevertec.bill.model.service.DiscountCardService - findByNumber result={"value":{"cardId":6,"cardNumber":1111,"discountPercent":10}}
+2021-02-01T19:38:02,659 DEBUG ru.clevertec.bill.model.service.DiscountCardService - findByNumber args=[1111]
+2021-02-01T19:38:02,662 DEBUG ru.clevertec.bill.model.service.DiscountCardService - findByNumber result={"value":{"cardId":6,"cardNumber":1111,"discountPercent":10}}
+2021-02-01T19:38:10,883 DEBUG ru.clevertec.bill.model.service.DiscountCardService - findByNumber args=[1111]
+2021-02-01T19:38:10,886 DEBUG ru.clevertec.bill.model.service.DiscountCardService - findByNumber result={"value":{"cardId":6,"cardNumber":1111,"discountPercent":10}}
+2021-02-02T12:58:59,657 DEBUG ru.clevertec.bill.model.service.DiscountCardService - findByNumber args=[1111]
+2021-02-02T12:58:59,660 DEBUG ru.clevertec.bill.model.service.DiscountCardService - findByNumber result={"value":{"cardId":6,"cardNumber":1111,"discountPercent":10}}
+2021-02-02T12:58:59,673 DEBUG ru.clevertec.bill.model.service.DiscountCardService - findByNumber args=[2222]
+2021-02-02T12:58:59,674 DEBUG ru.clevertec.bill.model.service.DiscountCardService - findByNumber result={"value":{"cardId":2,"cardNumber":2222,"discountPercent":20}}
+2021-02-02T12:59:16,927 DEBUG ru.clevertec.bill.model.service.DiscountCardService - findByNumber args=[1111]
+2021-02-02T12:59:16,929 DEBUG ru.clevertec.bill.model.service.DiscountCardService - findByNumber result={"value":{"cardId":6,"cardNumber":1111,"discountPercent":10}}
+2021-02-02T13:13:29,684 DEBUG ru.clevertec.bill.model.service.DiscountCardService - findByNumber args=[1111]
+2021-02-02T13:13:29,687 DEBUG ru.clevertec.bill.model.service.DiscountCardService - findByNumber result={"value":{"cardId":6,"cardNumber":1111,"discountPercent":10}}
+2021-02-02T13:13:29,917 INFO  ru.clevertec.bill.observer.impl.MailListener - Event type PRINT_CLEVERTEC
