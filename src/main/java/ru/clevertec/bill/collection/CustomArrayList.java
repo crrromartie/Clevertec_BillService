@@ -2,9 +2,15 @@ package ru.clevertec.bill.collection;
 
 import java.io.Serializable;
 import java.util.*;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class CustomArrayList<E> implements List<E>, Iterable<E>, Serializable {
     private E[] values;
+    private final ReadWriteLock lock = new ReentrantReadWriteLock();
+    private final Lock readLock = lock.readLock();
+    private final Lock writeLock = lock.writeLock();
 
     @SuppressWarnings("unchecked")
     public CustomArrayList() {
@@ -13,69 +19,109 @@ public class CustomArrayList<E> implements List<E>, Iterable<E>, Serializable {
 
     @Override
     public int size() {
-        return values.length;
+        readLock.lock();
+        try {
+            return values.length;
+        } finally {
+            readLock.unlock();
+        }
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public boolean add(E e) {
-        E[] temp = values;
-        values = (E[]) new Object[temp.length + 1];
-        for (int i = 0; i < temp.length; i++) {
-            values[i] = temp[i];
+        writeLock.lock();
+        try {
+            E[] temp = values;
+            values = (E[]) new Object[temp.length + 1];
+            for (int i = 0; i < temp.length; i++) {
+                values[i] = temp[i];
+            }
+            values[values.length - 1] = e;
+            return true;
+        } finally {
+            writeLock.unlock();
         }
-        values[values.length - 1] = e;
-        return true;
     }
 
     @Override
     public E get(int index) {
-        if (index >= 0 && index < values.length) {
-            return values[index];
-        } else {
-            throw new IndexOutOfBoundsException("Index " + index + " out of bounds for size " + values.length);
+        readLock.lock();
+        try {
+            if (index >= 0 && index < values.length) {
+                return values[index];
+            } else {
+                throw new IndexOutOfBoundsException("Index " + index + " out of bounds for size " + values.length);
+            }
+        } finally {
+            readLock.unlock();
         }
     }
 
     @Override
     public boolean isEmpty() {
-        return (size() == 0);
+        readLock.lock();
+        try {
+            return (size() == 0);
+        } finally {
+            readLock.unlock();
+        }
     }
 
     @Override
     public boolean contains(Object o) {
-        int counter = 0;
-        for (int i = 0; i < size(); i++) {
-            if (o == get(i)) {
-                counter++;
+        readLock.lock();
+        try {
+            int counter = 0;
+            for (int i = 0; i < size(); i++) {
+                if (o == get(i)) {
+                    counter++;
+                }
             }
+            return (counter > 0);
+        } finally {
+            readLock.unlock();
         }
-        return (counter > 0);
     }
 
     @Override
     public Object[] toArray() {
-        return Arrays.copyOf(values, size());
+        readLock.lock();
+        try {
+            return Arrays.copyOf(values, size());
+        } finally {
+            readLock.unlock();
+        }
     }
 
     @SuppressWarnings("unchecked")
     public void delete(int index) {
-        if (index >= 0 && index < values.length) {
-            E[] temp = values;
-            values = (E[]) new Object[temp.length - 1];
-            for (int i = 0; i < index; i++) {
-                values[i] = temp[i];
+        writeLock.lock();
+        try {
+            if (index >= 0 && index < values.length) {
+                E[] temp = values;
+                values = (E[]) new Object[temp.length - 1];
+                for (int i = 0; i < index; i++) {
+                    values[i] = temp[i];
+                }
+                for (int i = index; i < values.length; i++) {
+                    values[i] = temp[i + 1];
+                }
+            } else {
+                throw new IndexOutOfBoundsException("Index " + index + " out of bounds for size " + values.length);
             }
-            for (int i = index; i < values.length; i++) {
-                values[i] = temp[i + 1];
-            }
-        } else {
-            throw new IndexOutOfBoundsException("Index " + index + " out of bounds for size " + values.length);
+        } finally {
+            writeLock.unlock();
         }
     }
 
     public void update(int index, E e) {
-        values[index] = e;
+        writeLock.lock();
+        try {
+            values[index] = e;
+        } finally {
+            writeLock.unlock();
+        }
     }
 
     /**
@@ -83,7 +129,12 @@ public class CustomArrayList<E> implements List<E>, Iterable<E>, Serializable {
      */
 
     public Iterator<E> iterator() {
-        return new ArrayIterator<>(values);
+        readLock.lock();
+        try {
+            return new ArrayIterator<>(values);
+        } finally {
+            readLock.unlock();
+        }
     }
 
     static class ArrayIterator<E> implements Iterator<E> {
@@ -195,8 +246,13 @@ public class CustomArrayList<E> implements List<E>, Iterable<E>, Serializable {
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", CustomArrayList.class.getSimpleName() + "[", "]")
-                .add("values=" + Arrays.toString(values))
-                .toString();
+        readLock.lock();
+        try {
+            return new StringJoiner(", ", CustomArrayList.class.getSimpleName() + "[", "]")
+                    .add("values=" + Arrays.toString(values))
+                    .toString();
+        } finally {
+            readLock.unlock();
+        }
     }
 }
