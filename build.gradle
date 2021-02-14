@@ -1,7 +1,8 @@
 plugins {
     id 'java'
     id 'war'
-    id "com.github.johnrengelman.shadow" version "6.1.0"
+    id 'com.github.johnrengelman.shadow' version '6.1.0'
+    id 'ru.clevertec.downloadPlugin' version '1.0'
     id 'application'
 }
 
@@ -46,7 +47,7 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
 }
 
-group = 'com.example'
+group = 'ru.clevertec'
 version = '1.0-SNAPSHOT'
 description = 'Clevertec_BillService'
 java.sourceCompatibility = JavaVersion.VERSION_14
@@ -102,8 +103,7 @@ compileJava {
     }
 }
 
-apply plugin: DownloadPlugin
-
+source.templateUrl = 'https://github.com/stebadmitriy/files/raw/main/Clevertec_Template.pdf'
 source.targetFile = 'C:/Users/IGOR/IdeaProjects/Clevertec_BillService/src/main/resources/templates/Clevertec_Template.pdf'
-
 build.dependsOn downloadPlugin
+

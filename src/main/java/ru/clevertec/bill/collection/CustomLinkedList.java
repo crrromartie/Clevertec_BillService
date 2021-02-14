@@ -6,7 +6,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-public class CustomLinkedList<E> implements List<E>, Iterable<E>, Serializable {
+public class CustomLinkedList<E> implements List<E>, Serializable {
     private Node<E> firstNode;
     private Node<E> lastNode;
     private int size = 0;
