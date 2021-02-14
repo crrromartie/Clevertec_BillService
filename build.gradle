@@ -2,7 +2,7 @@ plugins {
     id 'java'
     id 'war'
     id 'com.github.johnrengelman.shadow' version '6.1.0'
-    id 'ru.clevertec.downloadPlugin' version '1.0'
+//    id 'ru.clevertec.downloadPlugin' version '1.0'
     id 'application'
 }
 
@@ -103,7 +103,7 @@ compileJava {
     }
 }
 
-source.templateUrl = 'https://github.com/stebadmitriy/files/raw/main/Clevertec_Template.pdf'
-source.targetFile = 'C:/Users/IGOR/IdeaProjects/Clevertec_BillService/src/main/resources/templates/Clevertec_Template.pdf'
-build.dependsOn downloadPlugin
+//source.templateUrl = 'https://github.com/stebadmitriy/files/raw/main/Clevertec_Template.pdf'
+//source.targetFile = 'C:/Users/IGOR/IdeaProjects/Clevertec_BillService/src/main/resources/templates/Clevertec_Template.pdf'
+//build.dependsOn downloadPlugin
 

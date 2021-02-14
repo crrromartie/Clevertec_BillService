@@ -31,17 +31,17 @@ public class WriteBillCommand implements Command {
         String writingFormat = request.getParameter(ParameterName.WRITING_FORMAT);
         BillWriter billWriter;
         switch (writingFormat) {
-            case TXT -> billWriter = BillWriterFactory.BILL_TEXT_WRITER.getBillWriter();
-            case PDF -> billWriter = BillWriterFactory.BILL_PDF_WRITER.getBillWriter();
-            case PDF_CLEVERTEC -> billWriter = BillWriterFactory.BILL_CLEVERTEC_WRITER.getBillWriter();
+            case ParameterName.TXT -> billWriter = BillWriterFactory.BILL_TEXT_WRITER.getBillWriter();
+            case ParameterName.PDF -> billWriter = BillWriterFactory.BILL_PDF_WRITER.getBillWriter();
+            case ParameterName.PDF_CLEVERTEC -> billWriter = BillWriterFactory.BILL_CLEVERTEC_WRITER.getBillWriter();
             default -> {
                 router.setPage(PagePath.ERROR_404);
                 logger.log(Level.WARN, "Unexpected writing format");
                 throw new IllegalStateException("Unexpected value: " + writingFormat);
             }
         }
-        session.setAttribute(AttributeName.SAVE_BILL, true);
         session.setAttribute(AttributeName.BILL_FILE_PATH, billWriter.writeBill(bill));
+        session.setAttribute(AttributeName.SAVE_BILL, true);
         return router;
     }
 }

@@ -11,6 +11,9 @@ public class ParameterName {
     public static final String PRODUCT_PRICE = "price";
     //writer
     public static final String WRITING_FORMAT = "writing_format";
+    public static final String TXT = "txt";
+    public static final String PDF = "pdf";
+    public static final String PDF_CLEVERTEC = "pdf_clevertec";
 
     private ParameterName() {
     }

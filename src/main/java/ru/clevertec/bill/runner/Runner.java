@@ -39,12 +39,12 @@ public class Runner {
         BillService billService = BillServiceImpl.getINSTANCE();
         Bill bill = billService.makeBill(orderBuilder.getOrder());
 
-        EventListener eventListener = new MailListener(new MailServiceImpl());
-        BillWriter billWriter = BillWriterFactory.BILL_CLEVERTEC_WRITER.getBillWriter();
-
-        billWriter.getEventManager().subscribe(State.PRINT_CLEVERTEC, eventListener);
-
-        System.out.println(billWriter.writeBill(bill));
+//        EventListener eventListener = new MailListener(new MailServiceImpl());
+//        BillWriter billWriter = BillWriterFactory.BILL_CLEVERTEC_WRITER.getBillWriter();
+//
+//        billWriter.getEventManager().subscribe(State.PRINT_CLEVERTEC, eventListener);
+//
+//        System.out.println(billWriter.writeBill(bill));
 
         BillConverter billConverter = new BillConverterImpl();
         String billString = billConverter.convertBillToString(bill);

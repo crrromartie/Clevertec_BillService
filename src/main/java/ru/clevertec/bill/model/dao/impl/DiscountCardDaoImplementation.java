@@ -23,9 +23,10 @@ class DiscountCardDaoImplementation extends AbstractDao implements DiscountCardD
     private static final String DELETE_CARD_BY_CARD_NUMBER = "DELETE FROM discount_card WHERE card_number = ?";
     private static final String SELECT_CARD_BY_NUMBER = "SELECT card_id, card_number, discount_percent " +
             "FROM discount_card WHERE card_number = ?";
-    private static final String CHANGE_DISCOUNT_PERCENT_BY_ID = "UPDATE discount_card SET discount_percent = ? WHERE card_id = ?";
-    private static final String CHANGE_DISCOUNT_PERCENT_BY_CARD_NUMBER = "UPDATE discount_card SET discount_percent = ? " +
-            "WHERE card_number = ?";
+    private static final String CHANGE_DISCOUNT_PERCENT_BY_ID = "UPDATE discount_card SET discount_percent = ? " +
+            "WHERE card_id = ?";
+    private static final String CHANGE_DISCOUNT_PERCENT_BY_CARD_NUMBER = "UPDATE discount_card " +
+            "SET discount_percent = ? WHERE card_number = ?";
 
     @Override
     public List<DiscountCard> findAll() throws DaoException {
