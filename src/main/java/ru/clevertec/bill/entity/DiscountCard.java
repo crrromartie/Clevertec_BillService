@@ -28,6 +28,18 @@ public class DiscountCard extends Entity {
         return discountPercent;
     }
 
+    public void setCardId(long cardId) {
+        this.cardId = cardId;
+    }
+
+    public void setCardNumber(int cardNumber) {
+        this.cardNumber = cardNumber;
+    }
+
+    public void setDiscountPercent(int discountPercent) {
+        this.discountPercent = discountPercent;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

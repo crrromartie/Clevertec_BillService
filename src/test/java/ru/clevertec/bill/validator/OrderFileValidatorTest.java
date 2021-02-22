@@ -4,32 +4,32 @@ import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class OrderValidatorTest {
+class OrderFileValidatorTest {
     @Test
     void isParametersValidPositiveTest() {
         String orderParam = "1-5";
-        boolean actual = OrderValidator.isParametersValid(orderParam);
+        boolean actual = OrderFileValidator.isParametersValid(orderParam);
         assertTrue(actual);
     }
 
     @Test
     void isParametersValidNegativeTest() {
         String orderParam = "1--2";
-        boolean actual = OrderValidator.isParametersValid(orderParam);
+        boolean actual = OrderFileValidator.isParametersValid(orderParam);
         assertFalse(actual);
     }
 
     @Test
     void isCardValidPositiveTest() {
         String card = "card-5568";
-        boolean actual = OrderValidator.isCardValid(card);
+        boolean actual = OrderFileValidator.isCardValid(card);
         assertTrue(actual);
     }
 
     @Test
     void isCardValidNegativeTest() {
         String card = "card-55689";
-        boolean actual = OrderValidator.isCardValid(card);
+        boolean actual = OrderFileValidator.isCardValid(card);
         assertFalse(actual);
     }
 }

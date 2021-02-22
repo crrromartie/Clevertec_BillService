@@ -4,10 +4,7 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ru.clevertec.bill.controller.Router;
-import ru.clevertec.bill.controller.command.AttributeName;
-import ru.clevertec.bill.controller.command.Command;
-import ru.clevertec.bill.controller.command.PagePath;
-import ru.clevertec.bill.controller.command.ParameterName;
+import ru.clevertec.bill.controller.command.*;
 import ru.clevertec.bill.entity.Bill;
 import ru.clevertec.bill.writer.BillWriter;
 import ru.clevertec.bill.writer.BillWriterFactory;
@@ -18,13 +15,14 @@ import javax.servlet.http.HttpSession;
 public class WriteBillCommand implements Command {
     static Logger logger = LogManager.getLogger();
 
-    private static final String TXT = "txt";
-    private static final String PDF = "pdf";
-    private static final String PDF_CLEVERTEC = "pdf_clevertec";
+    private static final String BILL_SAVE_PARAMETER = "&saveBill=true";
 
     @Override
     public Router execute(HttpServletRequest request) {
-        Router router = new Router(PagePath.NOTIFICATION_PAGE);
+        Router router = new Router(new StringBuilder()
+                .append(request.getContextPath())
+                .append(CommandPath.BILL_PASS)
+                .append(BILL_SAVE_PARAMETER).toString());
         router.setRedirect();
         HttpSession session = request.getSession();
         Bill bill = (Bill) session.getAttribute(AttributeName.BILL);
@@ -41,7 +39,6 @@ public class WriteBillCommand implements Command {
             }
         }
         session.setAttribute(AttributeName.BILL_FILE_PATH, billWriter.writeBill(bill));
-        session.setAttribute(AttributeName.SAVE_BILL, true);
         return router;
     }
 }

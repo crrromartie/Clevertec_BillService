@@ -3,19 +3,15 @@ package ru.clevertec.bill.controller.command.impl;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ru.clevertec.bill.builder.ProductBuilder;
-import ru.clevertec.bill.builder.impl.ProductBuilderImpl;
 import ru.clevertec.bill.controller.Router;
-import ru.clevertec.bill.controller.command.AttributeName;
-import ru.clevertec.bill.controller.command.Command;
-import ru.clevertec.bill.controller.command.PagePath;
-import ru.clevertec.bill.controller.command.ParameterName;
+import ru.clevertec.bill.controller.command.*;
 import ru.clevertec.bill.exception.ServiceException;
 import ru.clevertec.bill.model.service.ProductService;
-import ru.clevertec.bill.model.service.impl.ProductServiceImpl;
+import ru.clevertec.bill.model.service.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
-import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AddProductCommand implements Command {
     static Logger logger = LogManager.getLogger();
@@ -23,24 +19,38 @@ public class AddProductCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) {
         Router router = new Router();
-        String name = request.getParameter(ParameterName.PRODUCT_NAME);
-        BigDecimal price = BigDecimal.valueOf(Double.parseDouble(request.getParameter(ParameterName.PRODUCT_PRICE)));
-        ProductService productService = ProductServiceImpl.getINSTANCE().getProductService();
-        ProductBuilder productBuilder = new ProductBuilderImpl();
-        productBuilder.setName(name);
-        productBuilder.setPrice(price);
+        Map<String, String> productParameters = fillProductParameters(request);
+        ProductService productService = ServiceFactory.getINSTANCE().getProductService();
         try {
-            if (productService.add(productBuilder.getProduct())) {
-                request.setAttribute(AttributeName.ADD_PRODUCT, true);
-                router.setPage(PagePath.NOTIFICATION_PAGE);
+            if (productService.isProductNameUnique(productParameters.get(ParameterName.PRODUCT_NAME))) {
+                if (productService.add(productParameters)) {
+                    router.setPage(new StringBuilder()
+                            .append(request.getContextPath())
+                            .append(CommandPath.PRODUCTS_PASS).toString());
+                    router.setRedirect();
+                } else {
+                    request.setAttribute(AttributeName.PRODUCT_PARAMETERS, productParameters);
+                    request.setAttribute(AttributeName.INCORRECT_PRODUCT_DATA, true);
+                    router.setPage(PagePath.NEW_PRODUCT_PAGE);
+                }
             } else {
-                request.setAttribute(AttributeName.INCORRECT_PRODUCT_DATA, true);
-                router.setPage(PagePath.PRODUCT_PAGE);
+                request.setAttribute(AttributeName.PRODUCT_PARAMETERS, productParameters);
+                request.setAttribute(AttributeName.UNIQUE_PRODUCT_NAME_ERROR, true);
+                router.setPage(PagePath.NEW_PRODUCT_PAGE);
             }
         } catch (ServiceException e) {
             logger.log(Level.ERROR, e.getMessage());
             router.setPage(PagePath.ERROR_500);
         }
         return router;
+    }
+
+    private Map<String, String> fillProductParameters(HttpServletRequest request) {
+        String name = request.getParameter(ParameterName.PRODUCT_NAME);
+        String price = request.getParameter(ParameterName.PRODUCT_PRICE);
+        Map<String, String> productParameters = new HashMap<>();
+        productParameters.put(ParameterName.PRODUCT_NAME, name);
+        productParameters.put(ParameterName.PRODUCT_PRICE, price);
+        return productParameters;
     }
 }

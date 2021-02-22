@@ -35,6 +35,22 @@ public class Product extends Entity {
         return isPromo;
     }
 
+    public void setProductId(long productId) {
+        this.productId = productId;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public void setPromo(boolean promo) {
+        isPromo = promo;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

@@ -27,20 +27,17 @@ public class DiscountCardServiceHandler implements InvocationHandler {
         CustomJsonParser parser = new CustomJsonParserImpl();
         Object invoke = method.invoke(discountCardService, args);
         if (method.getName().equals(FIND_BY_NUMBER)) {
-
             String arguments = EMPTY_STRING;
             if (args != null) {
                 arguments = parser.parseToJson(args);
             }
-
             String result = EMPTY_STRING;
             if (invoke != null) {
                 result = parser.parseToJson(invoke);
             }
-
             logger.log(Level.DEBUG, "{} args={}", method.getName(), arguments);
             logger.log(Level.DEBUG, "{} result={}", method.getName(), result);
         }
-        return method.invoke(discountCardService, args);
+        return invoke;
     }
 }

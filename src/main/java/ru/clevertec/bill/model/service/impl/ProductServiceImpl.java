@@ -1,96 +1,91 @@
 package ru.clevertec.bill.model.service.impl;
 
+import ru.clevertec.bill.builder.ProductBuilder;
+import ru.clevertec.bill.builder.impl.ProductBuilderImpl;
+import ru.clevertec.bill.controller.command.ParameterName;
 import ru.clevertec.bill.entity.Product;
+import ru.clevertec.bill.exception.DaoException;
 import ru.clevertec.bill.exception.ServiceException;
+import ru.clevertec.bill.model.dao.DaoFactory;
+import ru.clevertec.bill.model.dao.ProductDao;
 import ru.clevertec.bill.model.service.ProductService;
-import ru.clevertec.bill.model.service.proxy.ProductServiceHandler;
+import ru.clevertec.bill.validator.ProductValidator;
 
-import java.lang.reflect.Proxy;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class ProductServiceImpl implements ProductService {
-    private static final ProductServiceImpl INSTANCE = new ProductServiceImpl();
+    private final ProductDao productDao = DaoFactory.getINSTANCE().getProductDao();
 
-    private final ProductService productService = new ProductServiceImplementation();
-
-    private ProductServiceImpl() {
-    }
-
-    public static ProductServiceImpl getINSTANCE() {
-        return INSTANCE;
-    }
-
-    public ProductService getProductService() {
-        ClassLoader productServiceClassLoader = productService.getClass().getClassLoader();
-        Class<?>[] productServiceInterfaces = productService.getClass().getInterfaces();
-        return (ProductService) Proxy.newProxyInstance(productServiceClassLoader,
-                productServiceInterfaces, new ProductServiceHandler(productService));
+    @Override
+    public Optional<Product> findById(long id) throws ServiceException {
+        try {
+            return productDao.findById(id);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
     public List<Product> findAll() throws ServiceException {
-        return productService.findAll();
+        try {
+            return productDao.findAll();
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public Optional<Product> findById(long id) throws ServiceException {
-        return productService.findById(id);
+    public boolean add(Map<String, String> productParameters) throws ServiceException {
+        if (!ProductValidator.isProductParametersValid(productParameters)) {
+            return false;
+        }
+        ProductBuilder productBuilder = new ProductBuilderImpl();
+        productBuilder.setName(productParameters.get(ParameterName.PRODUCT_NAME));
+        productBuilder.setPrice(BigDecimal.valueOf(Double
+                .parseDouble(productParameters.get(ParameterName.PRODUCT_PRICE))));
+        try {
+            return productDao.add(productBuilder.getProduct());
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public boolean add(Product product) throws ServiceException {
-        return productService.add(product);
+    public Optional<Product> edit(Map<String, String> editProductParameters, long id) throws ServiceException {
+        if (!ProductValidator.isProductParametersValid(editProductParameters)) {
+            return Optional.empty();
+        }
+        ProductBuilder productBuilder = new ProductBuilderImpl();
+        productBuilder.setProductId(id);
+        productBuilder.setName(editProductParameters.get(ParameterName.PRODUCT_NAME));
+        productBuilder.setPrice(BigDecimal.valueOf(Double.parseDouble(editProductParameters
+                .get(ParameterName.PRODUCT_PRICE))));
+        productBuilder.setPromo(Boolean.parseBoolean(editProductParameters.get(ParameterName.PRODUCT_PROMO)));
+        try {
+            return productDao.edit(productBuilder.getProduct());
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
     public void delete(long id) throws ServiceException {
-        productService.delete(id);
+        try {
+            productDao.delete(id);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public Optional<Product> findByName(String name) throws ServiceException {
-        return productService.findByName(name);
-    }
-
-    @Override
-    public void delete(String name) throws ServiceException {
-        productService.delete(name);
-    }
-
-    @Override
-    public boolean changePrice(long id, BigDecimal price) throws ServiceException {
-        return productService.changePrice(id, price);
-    }
-
-    @Override
-    public boolean changePrice(String name, BigDecimal price) throws ServiceException {
-        return productService.changePrice(name, price);
-    }
-
-    @Override
-    public boolean makePromo(long id) throws ServiceException {
-        return productService.makePromo(id);
-    }
-
-    @Override
-    public boolean makePromo(String name) throws ServiceException {
-        return productService.makePromo(name);
-    }
-
-    @Override
-    public boolean removePromo(long id) throws ServiceException {
-        return productService.removePromo(id);
-    }
-
-    @Override
-    public boolean removePromo(String name) throws ServiceException {
-        return productService.removePromo(name);
-    }
-
-    @Override
-    public boolean addPromoProduct(Product product) throws ServiceException {
-        return productService.addPromoProduct(product);
+    public boolean isProductNameUnique(String name) throws ServiceException {
+        try {
+            return productDao.findByName(name).isEmpty();
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
     }
 }

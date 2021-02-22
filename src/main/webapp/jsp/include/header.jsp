@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: IHOR
-  Date: 19.11.2020
-  Time: 19:01
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -13,35 +6,58 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/general-styles.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/general.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/form.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+          integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <title>Header</title>
 </head>
 <body>
-<div class="line"></div>
-<div class="header">
-    <a href="${pageContext.request.contextPath}/CandyShop?command=main_pass"><fmt:message key="header.name"/></a><br/>
-    <a href="${pageContext.request.contextPath}/CandyShop?command=seller_pass"><fmt:message
-            key="seller.page.title"/></a>
-    <c:choose>
-        <c:when test="${sessionScope.lang eq 'en'}">
-            <fmt:message key="header.language_en"/>
-        </c:when>
-        <c:otherwise>
-            <fmt:message key="header.language_ru"/>
-        </c:otherwise>
-    </c:choose>
-    <ul>
-        <li>
-            <a href="${pageContext.request.contextPath}/CandyShop?command=change_locale&lang=ru"><span><fmt:message
-                    key="header.language_ru"/></span></a>
-        </li>
-        <li>
-            <a href="${pageContext.request.contextPath}/CandyShop?command=change_locale&lang=en"><span><fmt:message
-                    key="header.language_en"/></span></a>
-        </li>
-    </ul>
+<div class="wrapper">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="${pageContext.request.contextPath}/CandyShop?command=home_pass">
+                    <c:out value="CandyShop"/>
+                </a>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link"
+                               href="${pageContext.request.contextPath}/CandyShop?command=home_pass">
+                                <fmt:message key="header.home"/></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link"
+                               href="${pageContext.request.contextPath}/CandyShop?command=products_pass">
+                                <fmt:message key="header.products"/></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link"
+                               href="${pageContext.request.contextPath}/CandyShop?command=cards_pass">
+                                <fmt:message key="header.cards"/></a>
+                        </li>
+                    </ul>
+                    <div class="col" id="lang_switch" style="max-width: 70px">
+                        <div class="row">
+                            <div class="col text-right">
+                                <a href="${pageContext.request.contextPath}/CandyShop?command=change_locale&lang=ru">
+                                    <fmt:message key="header.language_ru"/>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col text-right">
+                                <a href="${pageContext.request.contextPath}/CandyShop?command=change_locale&lang=en">
+                                    <fmt:message key="header.language_en"/>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
 </div>
-<div class="line"></div>
 </body>
 </html>

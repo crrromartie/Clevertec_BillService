@@ -10,7 +10,7 @@ import ru.clevertec.bill.collection.CustomArrayList;
 import ru.clevertec.bill.entity.Bill;
 import ru.clevertec.bill.exception.ServiceException;
 import ru.clevertec.bill.model.service.BillService;
-import ru.clevertec.bill.model.service.impl.BillServiceImpl;
+import ru.clevertec.bill.model.service.ServiceFactory;
 import ru.clevertec.bill.parser.impl.CustomJsonParserImpl;
 
 import java.util.HashMap;
@@ -51,7 +51,7 @@ class CustomJsonParserImplTest {
         orderBuilder2.setPurchaseParameters(purchasesParameters2);
         orderBuilder2.setCardNumber(2222);
 
-        BillService billService = BillServiceImpl.getINSTANCE();
+        BillService billService = ServiceFactory.getINSTANCE().getBillService();
         Bill bill1 = billService.makeBill(orderBuilder1.getOrder());
         Bill bill2 = billService.makeBill(orderBuilder2.getOrder());
 

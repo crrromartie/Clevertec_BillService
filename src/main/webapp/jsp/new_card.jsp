@@ -3,9 +3,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="properties.pagecontent"/>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title><fmt:message key="card_page.title"/></title>
+    <title><fmt:message key="new_card_page.title"/></title>
 </head>
 <body>
 <jsp:include page="${pageContext.request.contextPath}/jsp/include/header.jsp"/>
@@ -13,17 +14,18 @@
     <div class="container default-page">
         <div class="row">
             <div class="col-6 offset-3">
-                <form name="EditCard" class="form-horizontal" action="${pageContext.request.contextPath}/CandyShop"
+                <form name="AddCard" class="form-horizontal" action="${pageContext.request.contextPath}/CandyShop"
                       method="post">
-                    <input type="hidden" name="command" value="edit_card"/>
-                    <span class="heading"><fmt:message key="card_page.edit_card"/></span>
+                    <input type="hidden" name="command" value="add_card"/>
+                    <span class="heading"><fmt:message key="cards_page.add"/></span>
                     <div class="form-group">
-                        <input type="text"
+                        <input type="number"
                                class="form-control"
                                name="cardNumber"
-                               value="${card.getCardNumber()}"
+                               value="${cardParameters.get("cardNumber")}"
                                title="<fmt:message key="card_page.card_number"/>"
-                               pattern="\w{4}"
+                               min="1000"
+                               max="9999"
                                required
                                placeholder="<fmt:message key="card_page.card_number"/>"
                                oninvalid="this.setCustomValidity('<fmt:message
@@ -34,7 +36,7 @@
                         <input type="number"
                                class="form-control"
                                name="cardDiscountPercent"
-                               value="${card.getDiscountPercent()}"
+                               value="${cardParameters.get("cardDiscountPercent")}"
                                title="<fmt:message key="card_page.discount_percent"/>"
                                min="10"
                                max="40"

@@ -4,14 +4,10 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ru.clevertec.bill.controller.Router;
-import ru.clevertec.bill.controller.command.AttributeName;
-import ru.clevertec.bill.controller.command.Command;
-import ru.clevertec.bill.controller.command.PagePath;
-import ru.clevertec.bill.controller.command.ParameterName;
+import ru.clevertec.bill.controller.command.*;
 import ru.clevertec.bill.exception.ServiceException;
 import ru.clevertec.bill.model.service.DiscountCardService;
-import ru.clevertec.bill.model.service.impl.DiscountCardServiceImpl;
-import ru.clevertec.bill.validator.DiscountCardValidator;
+import ru.clevertec.bill.model.service.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -20,18 +16,14 @@ public class DeleteDiscountCardCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) {
-        Router router = new Router();
-        int cardNumber = Integer.parseInt(request.getParameter(ParameterName.CARD_NUMBER));
-        DiscountCardService cardService = DiscountCardServiceImpl.getINSTANCE().getDiscountCardService();
+        Router router = new Router(new StringBuilder()
+                .append(request.getContextPath())
+                .append(CommandPath.CARDS_PASS).toString());
+        router.setRedirect();
+        long cardId = Long.parseLong(request.getParameter(ParameterName.CARD_ID));
+        DiscountCardService cardService = ServiceFactory.getINSTANCE().getDiscountCardService();
         try {
-            if (DiscountCardValidator.isCardNumberValid(cardNumber)) {
-                cardService.delete(cardNumber);
-                request.setAttribute(AttributeName.DELETE_CARD, true);
-                router.setPage(PagePath.NOTIFICATION_PAGE);
-            } else {
-                request.setAttribute(AttributeName.INCORRECT_CARD_DATA, true);
-                router.setPage(PagePath.CARD_PAGE);
-            }
+            cardService.delete(cardId);
         } catch (ServiceException e) {
             logger.log(Level.ERROR, e.getMessage());
             router.setPage(PagePath.ERROR_500);

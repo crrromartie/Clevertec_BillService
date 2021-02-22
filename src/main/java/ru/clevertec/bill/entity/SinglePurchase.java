@@ -49,6 +49,22 @@ public class SinglePurchase extends Entity {
         return promoDiscount;
     }
 
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public void setTotal(BigDecimal total) {
+        this.total = total;
+    }
+
+    public void setPromoDiscount(BigDecimal promoDiscount) {
+        this.promoDiscount = promoDiscount;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

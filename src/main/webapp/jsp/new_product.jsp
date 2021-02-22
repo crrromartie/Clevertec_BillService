@@ -5,7 +5,7 @@
 <fmt:setBundle basename="properties.pagecontent"/>
 <html>
 <head>
-    <title><fmt:message key="card_page.title"/></title>
+    <title><fmt:message key="new_product_page.title"/></title>
 </head>
 <body>
 <jsp:include page="${pageContext.request.contextPath}/jsp/include/header.jsp"/>
@@ -13,51 +13,50 @@
     <div class="container default-page">
         <div class="row">
             <div class="col-6 offset-3">
-                <form name="EditCard" class="form-horizontal" action="${pageContext.request.contextPath}/CandyShop"
+                <form name="AddProduct" class="form-horizontal" action="${pageContext.request.contextPath}/CandyShop"
                       method="post">
-                    <input type="hidden" name="command" value="edit_card"/>
-                    <span class="heading"><fmt:message key="card_page.edit_card"/></span>
+                    <input type="hidden" name="command" value="add_product"/>
+                    <span class="heading"><fmt:message key="product_page.add"/></span>
                     <div class="form-group">
                         <input type="text"
                                class="form-control"
-                               name="cardNumber"
-                               value="${card.getCardNumber()}"
-                               title="<fmt:message key="card_page.card_number"/>"
-                               pattern="\w{4}"
+                               name="name"
+                               value="${productParameters.get("name")}"
+                               title="<fmt:message key="product_page.name"/>"
+                               pattern=".{3,30}"
                                required
-                               placeholder="<fmt:message key="card_page.card_number"/>"
+                               placeholder="<fmt:message key="product_page.name"/>"
                                oninvalid="this.setCustomValidity('<fmt:message
-                                       key="oninvalid.card_number_pattern"/>')"
+                                       key="oninvalid.product_name_pattern"/>')"
                                onchange="this.setCustomValidity('')"/>
                     </div>
                     <div class="form-group">
-                        <input type="number"
+                        <input type="text"
                                class="form-control"
-                               name="cardDiscountPercent"
-                               value="${card.getDiscountPercent()}"
-                               title="<fmt:message key="card_page.discount_percent"/>"
-                               min="10"
-                               max="40"
+                               name="price"
+                               value="${productParameters.get("price")}"
+                               title="<fmt:message key="product_page.price"/>"
+                               pattern="\d{1,2}[.,]\d{1,2}"
                                required
-                               placeholder="<fmt:message key="card_page.discount_percent"/>"
+                               placeholder="<fmt:message key="product_page.price"/>"
                                oninvalid="this.setCustomValidity('<fmt:message
-                                       key="oninvalid.card_discount_percent_pattern"/>')"
+                                       key="oninvalid.product_price_pattern"/>')"
                                onchange="this.setCustomValidity('')"/>
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-default">
-                            <fmt:message key="card_page.submit"/>
+                            <fmt:message key="product_page.submit"/>
                         </button>
                     </div>
                 </form>
-                <c:if test="${uniqueCardNumberError}">
+                <c:if test="${uniqueProductNameError}">
                     <div class="form-group">
-                        <label class="text"><fmt:message key="card_page.card_number_not_unique"/></label>
+                        <label class="text"><fmt:message key="product_page.product_name_not_unique"/></label>
                     </div>
                 </c:if>
-                <c:if test="${incorrectCardData}">
+                <c:if test="${incorrectProductData}">
                     <div class="form-group">
-                        <label class="text"><fmt:message key="card_page.incorrect_card_data"/></label>
+                        <label class="text"><fmt:message key="product_page.incorrect_product_data"/></label>
                     </div>
                 </c:if>
             </div>

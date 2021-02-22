@@ -1,0 +1,104 @@
+html,
+body {
+    height: 100%;
+    font-size: 18px;
+}
+
+.container {
+    font-family: Calibri, serif;
+}
+
+.wrapper {
+    background-color: #B6B6B6;
+    background-size: cover;
+}
+
+.footer {
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #343A40;
+}
+
+.footer span {
+    color: #999DA0;
+}
+
+.default-page {
+    min-height: calc(100vh - 185px);
+}
+
+.notification-page {
+    min-height: calc(100vh - 185px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+}
+
+#error-page-500 {
+    min-height: calc(100vh - 185px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    background-color: #999DA0;
+}
+
+#error-page-500 h1 {
+    color: #f0f0f0;
+}
+
+#error-page-404 {
+    min-height: calc(100vh - 185px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    background-color: #999DA0;
+}
+
+#error-page-404 h1 {
+    color: #f0f0f0;
+}
+
+.butt {
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 30px;
+    padding-right: 30px;
+    color: #f0f0f0;
+    background-color: #343A40;
+}
+
+#home {
+    background: url('../img/home.jpg');
+}
+
+#info {
+    font-size: 24px;
+    font-weight: 500;
+}
+
+#delButt {
+    background-color: #816767;
+!important;
+    opacity: initial;
+    margin: 0;
+    padding: 0;
+    font-size: 12px;
+}
+
+#delButt:hover {
+    background-color: unset;
+!important;
+    transition: 0.5s linear;
+}
+
+.message-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+}

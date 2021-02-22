@@ -6,20 +6,19 @@ public class AttributeName {
     public static final String LANG = "lang";
     public static final String BILL_FILE_PATH = "billFilePath";
     //product
+    public static final String PRODUCT = "product";
     public static final String PRODUCTS = "products";
+    public static final String PRODUCT_PARAMETERS = "productParameters";
+    //card
+    public static final String CARD = "card";
+    public static final String CARDS = "cards";
+    public static final String CARD_PARAMETERS = "cardParameters";
     //bill
     public static final String BILL = "bill";
-    //notification
     public static final String SAVE_BILL = "saveBill";
-    public static final String ADD_PRODUCT = "addProduct";
-    public static final String DELETE_PRODUCT = "deleteProduct";
-    public static final String CHANGE_PRICE = "changePrice";
-    public static final String MAKE_PROMO = "makePromo";
-    public static final String REMOVE_PROMO = "removePromo";
-    public static final String ADD_CARD = "addCard";
-    public static final String DELETE_CARD = "deleteCard";
-    public static final String CHANGE_DISCOUNT = "changeDiscount";
     //message
+    public static final String UNIQUE_PRODUCT_NAME_ERROR = "uniqueProductNameError";
+    public static final String UNIQUE_CARD_NUMBER_ERROR = "uniqueCardNumberError";
     public static final String INCORRECT_PRODUCT_DATA = "incorrectProductData";
     public static final String INCORRECT_CARD_DATA = "incorrectCardData";
 

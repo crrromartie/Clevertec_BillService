@@ -29,6 +29,18 @@ public class Order extends Entity {
         return cardNumber;
     }
 
+    public void setOrderId(long orderId) {
+        this.orderId = orderId;
+    }
+
+    public void setPurchaseParameters(Map<Long, Integer> purchaseParameters) {
+        this.purchaseParameters = purchaseParameters;
+    }
+
+    public void setCardNumber(int cardNumber) {
+        this.cardNumber = cardNumber;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

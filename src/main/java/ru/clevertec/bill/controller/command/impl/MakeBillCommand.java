@@ -6,17 +6,13 @@ import org.apache.logging.log4j.Logger;
 import ru.clevertec.bill.builder.OrderBuilder;
 import ru.clevertec.bill.builder.impl.OrderBuilderImpl;
 import ru.clevertec.bill.controller.Router;
-import ru.clevertec.bill.controller.command.AttributeName;
-import ru.clevertec.bill.controller.command.Command;
-import ru.clevertec.bill.controller.command.PagePath;
-import ru.clevertec.bill.controller.command.ParameterName;
+import ru.clevertec.bill.controller.command.*;
 import ru.clevertec.bill.entity.Bill;
 import ru.clevertec.bill.entity.Product;
 import ru.clevertec.bill.exception.ServiceException;
 import ru.clevertec.bill.model.service.BillService;
 import ru.clevertec.bill.model.service.ProductService;
-import ru.clevertec.bill.model.service.impl.BillServiceImpl;
-import ru.clevertec.bill.model.service.impl.ProductServiceImpl;
+import ru.clevertec.bill.model.service.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -29,10 +25,12 @@ public class MakeBillCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) {
-        Router router = new Router(PagePath.BILL_PAGE);
+        Router router = new Router(new StringBuilder()
+                .append(request.getContextPath())
+                .append(CommandPath.BILL_PASS).toString());
         router.setRedirect();
         HttpSession session = request.getSession();
-        ProductService productService = ProductServiceImpl.getINSTANCE().getProductService();
+        ProductService productService = ServiceFactory.getINSTANCE().getProductService();
         OrderBuilder orderBuilder = new OrderBuilderImpl();
         Map<Long, Integer> purchaseParameters = new HashMap<>();
         try {
@@ -48,7 +46,7 @@ public class MakeBillCommand implements Command {
                 int cardNumber = Integer.parseInt(request.getParameter(ParameterName.CARD_NUMBER));
                 orderBuilder.setCardNumber(cardNumber);
             }
-            BillService billService = BillServiceImpl.getINSTANCE();
+            BillService billService = ServiceFactory.getINSTANCE().getBillService();
             Bill bill = billService.makeBill(orderBuilder.getOrder());
             session.setAttribute(AttributeName.BILL, bill);
         } catch (ServiceException e) {

@@ -9,7 +9,7 @@ public final class Router {
         REDIRECT
     }
 
-    private String page = PagePath.MAIN_PAGE;
+    private String page = PagePath.INDEX_PAGE;
     private Type type = Type.FORWARD;
 
     public Router() {

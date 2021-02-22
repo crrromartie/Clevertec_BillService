@@ -59,6 +59,34 @@ public class Bill extends Entity {
         return date;
     }
 
+    public void setBillId(long billId) {
+        this.billId = billId;
+    }
+
+    public void setSinglePurchases(List<SinglePurchase> singlePurchases) {
+        this.singlePurchases = singlePurchases;
+    }
+
+    public void setCardDiscount(BigDecimal cardDiscount) {
+        this.cardDiscount = cardDiscount;
+    }
+
+    public void setCardDiscountPercent(int cardDiscountPercent) {
+        this.cardDiscountPercent = cardDiscountPercent;
+    }
+
+    public void setPromoDiscount(BigDecimal promoDiscount) {
+        this.promoDiscount = promoDiscount;
+    }
+
+    public void setTotalForPay(BigDecimal totalForPay) {
+        this.totalForPay = totalForPay;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

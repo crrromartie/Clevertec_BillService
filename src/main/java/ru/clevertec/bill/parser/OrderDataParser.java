@@ -1,6 +1,6 @@
 package ru.clevertec.bill.parser;
 
-import ru.clevertec.bill.validator.OrderValidator;
+import ru.clevertec.bill.validator.OrderFileValidator;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +13,7 @@ public final class OrderDataParser {
         Map<Long, Integer> purchaseParams = new HashMap<>();
         String[] elements = line.strip().split(REGEX_DELIMITER);
         for (String element : elements) {
-            if (OrderValidator.isParametersValid(element)) {
+            if (OrderFileValidator.isParametersValid(element)) {
                 Long key = Long.parseLong(element.strip().split(REGEX_DELIMITER_PARAM)[0]);
                 Integer value = Integer.parseInt(element.strip().split(REGEX_DELIMITER_PARAM)[1]);
                 purchaseParams.put(key, value);
@@ -26,7 +26,7 @@ public final class OrderDataParser {
         int cardNumber = 0;
         String[] elements = line.strip().split(REGEX_DELIMITER);
         for (String element : elements) {
-            if (OrderValidator.isCardValid(element)) {
+            if (OrderFileValidator.isCardValid(element)) {
                 cardNumber = Integer.parseInt(element.strip().split(REGEX_DELIMITER_PARAM)[1]);
             }
         }

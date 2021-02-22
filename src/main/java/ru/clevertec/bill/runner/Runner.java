@@ -5,11 +5,7 @@ import ru.clevertec.bill.builder.impl.OrderBuilderImpl;
 import ru.clevertec.bill.entity.Bill;
 import ru.clevertec.bill.exception.ServiceException;
 import ru.clevertec.bill.model.service.BillService;
-import ru.clevertec.bill.model.service.impl.BillServiceImpl;
-import ru.clevertec.bill.model.service.impl.MailServiceImpl;
-import ru.clevertec.bill.observer.EventListener;
-import ru.clevertec.bill.observer.entity.State;
-import ru.clevertec.bill.observer.impl.MailListener;
+import ru.clevertec.bill.model.service.ServiceFactory;
 import ru.clevertec.bill.parser.OrderDataParser;
 import ru.clevertec.bill.reader.DataReader;
 import ru.clevertec.bill.util.BillConverter;
@@ -36,14 +32,10 @@ public class Runner {
         orderBuilder.setPurchaseParameters(orderParameters);
         orderBuilder.setCardNumber(cardNumber);
 
-        BillService billService = BillServiceImpl.getINSTANCE();
+        BillService billService = ServiceFactory.getINSTANCE().getBillService();
         Bill bill = billService.makeBill(orderBuilder.getOrder());
 
-        EventListener eventListener = new MailListener(new MailServiceImpl());
         BillWriter billWriter = BillWriterFactory.BILL_CLEVERTEC_WRITER.getBillWriter();
-
-        billWriter.getEventManager().subscribe(State.PRINT_CLEVERTEC, eventListener);
-
         System.out.println(billWriter.writeBill(bill));
 
         BillConverter billConverter = new BillConverterImpl();

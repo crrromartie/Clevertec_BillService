@@ -31,19 +31,6 @@
         <url-pattern>/CandyShop</url-pattern>
     </servlet-mapping>
 
-    <filter>
-        <filter-name>encodingFilter</filter-name>
-        <filter-class>ru.clevertec.bill.controller.filter.EncodingFilter</filter-class>
-        <init-param>
-            <param-name>encoding</param-name>
-            <param-value>UTF-8</param-value>
-        </init-param>
-    </filter>
-    <filter-mapping>
-        <filter-name>encodingFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-
     <listener>
         <listener-class>ru.clevertec.bill.controller.listener.SessionListenerImpl</listener-class>
     </listener>
