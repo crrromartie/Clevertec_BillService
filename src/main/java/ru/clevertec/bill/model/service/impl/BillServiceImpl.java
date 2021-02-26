@@ -4,7 +4,6 @@ import ru.clevertec.bill.builder.BillBuilder;
 import ru.clevertec.bill.builder.SinglePurchaseBuilder;
 import ru.clevertec.bill.builder.impl.BillBuilderImpl;
 import ru.clevertec.bill.builder.impl.SinglePurchaseBuilderImpl;
-import ru.clevertec.bill.collection.CustomLinkedList;
 import ru.clevertec.bill.entity.*;
 import ru.clevertec.bill.exception.DaoException;
 import ru.clevertec.bill.exception.ServiceException;
@@ -12,6 +11,9 @@ import ru.clevertec.bill.model.dao.DaoFactory;
 import ru.clevertec.bill.model.dao.DiscountCardDao;
 import ru.clevertec.bill.model.dao.ProductDao;
 import ru.clevertec.bill.model.service.BillService;
+import ru.clevertec.custom.CustomArrayList;
+import ru.clevertec.custom.LoggingAnnotation;
+import ru.clevertec.custom.LoggingLevel;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -27,6 +29,7 @@ public class BillServiceImpl implements BillService {
     private static final int DISCOUNT_PERCENT_PROMO = 10;
     private static final int QUANTITY_FOR_PROMO = 5;
 
+    @LoggingAnnotation(LoggingLevel.INFO)
     @Override
     public Bill makeBill(Order order) throws ServiceException {
         try {
@@ -53,7 +56,7 @@ public class BillServiceImpl implements BillService {
 
     private List<SinglePurchase> createSinglePurchases(Order order) throws DaoException {
         ProductDao productDao = DaoFactory.getINSTANCE().getProductDao();
-        List<SinglePurchase> singlePurchaseList = new CustomLinkedList<>();
+        List<SinglePurchase> singlePurchaseList = new CustomArrayList<>();
         for (Map.Entry<Long, Integer> item : order.getPurchaseParameters().entrySet()) {
             Optional<Product> optionalProduct = productDao.findById(item.getKey());
             if (optionalProduct.isPresent()) {

@@ -1,10 +1,10 @@
 package ru.clevertec.bill.validator;
 
-public class OrderFileValidator {
+public class TextOrderValidator {
     private static final String PARAMETER_REGEX = "\\d{1,2}-\\d{1,2}";
     private static final String CARD_REGEX = "card-\\d{4}";
 
-    private OrderFileValidator() {
+    private TextOrderValidator() {
     }
 
     public static boolean isParametersValid(String element) {

@@ -5,6 +5,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ru.clevertec.bill.controller.Router;
 import ru.clevertec.bill.controller.command.*;
+import ru.clevertec.bill.entity.DiscountCard;
 import ru.clevertec.bill.exception.ServiceException;
 import ru.clevertec.bill.model.service.DiscountCardService;
 import ru.clevertec.bill.model.service.ServiceFactory;
@@ -12,6 +13,7 @@ import ru.clevertec.bill.model.service.ServiceFactory;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class AddDiscountCardCommand implements Command {
     static Logger logger = LogManager.getLogger();
@@ -23,7 +25,8 @@ public class AddDiscountCardCommand implements Command {
         DiscountCardService cardService = ServiceFactory.getINSTANCE().getDiscountCardService();
         try {
             if (cardService.isDiscountCardNumberUnique(cardParameters.get(ParameterName.CARD_NUMBER))) {
-                if (cardService.add(cardParameters)) {
+                Optional<DiscountCard> optionalDiscountCard = cardService.add(cardParameters);
+                if (optionalDiscountCard.isPresent()) {
                     router.setPage(new StringBuilder()
                             .append(request.getContextPath())
                             .append(CommandPath.CARDS_PASS).toString());

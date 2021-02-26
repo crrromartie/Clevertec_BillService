@@ -58,6 +58,7 @@
                                                name="${product.getProductId()}"
                                                title="<fmt:message key="products_page.enter_quantity"/>"
                                                placeholder="<fmt:message key="products_page.enter_quantity"/>"
+                                               min="1"
                                                max="99"
                                                value=""
                                                oninvalid="this.setCustomValidity('<fmt:message

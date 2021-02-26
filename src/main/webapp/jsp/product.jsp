@@ -36,12 +36,14 @@
                                onchange="this.setCustomValidity('')"/>
                     </div>
                     <div class="form-group">
-                        <input type="text"
+                        <input type="number"
+                               step="0.01"
                                class="form-control"
                                name="price"
                                value="${product.getPrice()}"
                                title="<fmt:message key="product_page.price"/>"
-                               pattern="\d{1,2}[.,]\d{1,2}"
+                               min="1.00"
+                               max="99.00"
                                required
                                placeholder="<fmt:message key="product_page.price"/>"
                                oninvalid="this.setCustomValidity('<fmt:message

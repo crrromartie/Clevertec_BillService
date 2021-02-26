@@ -5,6 +5,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ru.clevertec.bill.controller.Router;
 import ru.clevertec.bill.controller.command.*;
+import ru.clevertec.bill.entity.Product;
 import ru.clevertec.bill.exception.ServiceException;
 import ru.clevertec.bill.model.service.ProductService;
 import ru.clevertec.bill.model.service.ServiceFactory;
@@ -12,6 +13,7 @@ import ru.clevertec.bill.model.service.ServiceFactory;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class AddProductCommand implements Command {
     static Logger logger = LogManager.getLogger();
@@ -23,7 +25,8 @@ public class AddProductCommand implements Command {
         ProductService productService = ServiceFactory.getINSTANCE().getProductService();
         try {
             if (productService.isProductNameUnique(productParameters.get(ParameterName.PRODUCT_NAME))) {
-                if (productService.add(productParameters)) {
+                Optional<Product> optionalProduct = productService.add(productParameters);
+                if (optionalProduct.isPresent()) {
                     router.setPage(new StringBuilder()
                             .append(request.getContextPath())
                             .append(CommandPath.PRODUCTS_PASS).toString());

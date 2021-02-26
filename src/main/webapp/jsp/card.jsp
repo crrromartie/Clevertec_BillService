@@ -18,12 +18,13 @@
                     <input type="hidden" name="command" value="edit_card"/>
                     <span class="heading"><fmt:message key="card_page.edit_card"/></span>
                     <div class="form-group">
-                        <input type="text"
+                        <input type="number"
                                class="form-control"
                                name="cardNumber"
                                value="${card.getCardNumber()}"
                                title="<fmt:message key="card_page.card_number"/>"
-                               pattern="\w{4}"
+                               min="1000"
+                               max="9999"
                                required
                                placeholder="<fmt:message key="card_page.card_number"/>"
                                oninvalid="this.setCustomValidity('<fmt:message

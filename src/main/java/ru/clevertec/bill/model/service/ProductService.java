@@ -13,7 +13,7 @@ public interface ProductService {
 
     List<Product> findAll() throws ServiceException;
 
-    boolean add(Map<String, String> productParameters) throws ServiceException;
+    Optional<Product> add(Map<String, String> productParameters) throws ServiceException;
 
     Optional<Product> edit(Map<String, String> editProductParameters, long id) throws ServiceException;
 

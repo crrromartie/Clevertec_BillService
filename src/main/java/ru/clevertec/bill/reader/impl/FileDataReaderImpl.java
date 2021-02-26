@@ -1,17 +1,19 @@
-package ru.clevertec.bill.reader;
+package ru.clevertec.bill.reader.impl;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ru.clevertec.bill.reader.FileDataReader;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public final class DataReader {
+public final class FileDataReaderImpl implements FileDataReader {
     static Logger logger = LogManager.getLogger();
 
+    @Override
     public String readData(File file) {
         String filePath = file.getPath();
         String text;

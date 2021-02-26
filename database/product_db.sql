@@ -5,7 +5,7 @@
 -- Dumped from database version 13.1
 -- Dumped by pg_dump version 13.1
 
--- Started on 2021-01-23 01:58:57
+-- Started on 2021-02-25 01:50:20
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -30,7 +30,7 @@ SET default_table_access_method = heap;
 CREATE TABLE public.discount_card (
     card_id bigint NOT NULL,
     card_number smallint NOT NULL,
-    discount_percent smallint DEFAULT 0 NOT NULL
+    discount_percent smallint NOT NULL
 );
 
 
@@ -52,7 +52,7 @@ CREATE SEQUENCE public.discount_card_card_id_seq
 ALTER TABLE public.discount_card_card_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3008 (class 0 OID 0)
+-- TOC entry 3007 (class 0 OID 0)
 -- Dependencies: 202
 -- Name: discount_card_card_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -91,7 +91,7 @@ CREATE SEQUENCE public.product_product_id_seq
 ALTER TABLE public.product_product_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3009 (class 0 OID 0)
+-- TOC entry 3008 (class 0 OID 0)
 -- Dependencies: 200
 -- Name: product_product_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -116,58 +116,54 @@ ALTER TABLE ONLY public.product ALTER COLUMN product_id SET DEFAULT nextval('pub
 
 
 --
--- TOC entry 3002 (class 0 OID 16438)
+-- TOC entry 3001 (class 0 OID 16438)
 -- Dependencies: 203
 -- Data for Name: discount_card; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.discount_card (card_id, card_number, discount_percent) FROM stdin;
-1	1111	10
-2	2222	20
-3	3333	30
-4	4444	40
-\.
+INSERT INTO public.discount_card (card_id, card_number, discount_percent) VALUES (3, 3333, 30);
+INSERT INTO public.discount_card (card_id, card_number, discount_percent) VALUES (9, 9999, 15);
+INSERT INTO public.discount_card (card_id, card_number, discount_percent) VALUES (2, 2222, 20);
+INSERT INTO public.discount_card (card_id, card_number, discount_percent) VALUES (25, 1111, 15);
+INSERT INTO public.discount_card (card_id, card_number, discount_percent) VALUES (28, 6666, 15);
 
 
 --
--- TOC entry 3000 (class 0 OID 16424)
+-- TOC entry 2999 (class 0 OID 16424)
 -- Dependencies: 201
 -- Data for Name: product; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.product (product_id, name, price, is_promo) FROM stdin;
-2	Snickers	10	t
-3	Nuts	11	f
-4	Spartak	7.5	t
-5	Bounty	13.5	f
-6	KitKat	9	f
-7	MilkyWay	8	f
-9	Vitba	6.25	f
-1	Mars	13.5	f
-10	Smack	3	t
-\.
+INSERT INTO public.product (product_id, name, price, is_promo) VALUES (2, 'Snickers', 10, true);
+INSERT INTO public.product (product_id, name, price, is_promo) VALUES (3, 'Nuts', 11, false);
+INSERT INTO public.product (product_id, name, price, is_promo) VALUES (7, 'MilkyWay', 8, false);
+INSERT INTO public.product (product_id, name, price, is_promo) VALUES (4, 'Spartak', 8.5, false);
+INSERT INTO public.product (product_id, name, price, is_promo) VALUES (32, 'Smack', 3.5, false);
+INSERT INTO public.product (product_id, name, price, is_promo) VALUES (5, 'Bounty', 13.5, true);
+INSERT INTO public.product (product_id, name, price, is_promo) VALUES (6, 'KitKat', 9.0, true);
+INSERT INTO public.product (product_id, name, price, is_promo) VALUES (1, 'Mars', 13.15, false);
 
 
 --
--- TOC entry 3010 (class 0 OID 0)
+-- TOC entry 3009 (class 0 OID 0)
 -- Dependencies: 202
 -- Name: discount_card_card_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.discount_card_card_id_seq', 4, true);
+SELECT pg_catalog.setval('public.discount_card_card_id_seq', 28, true);
 
 
 --
--- TOC entry 3011 (class 0 OID 0)
+-- TOC entry 3010 (class 0 OID 0)
 -- Dependencies: 200
 -- Name: product_product_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.product_product_id_seq', 10, true);
+SELECT pg_catalog.setval('public.product_product_id_seq', 35, true);
 
 
 --
--- TOC entry 2866 (class 2606 OID 16446)
+-- TOC entry 2865 (class 2606 OID 16446)
 -- Name: discount_card discount_card_card_number_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -176,7 +172,7 @@ ALTER TABLE ONLY public.discount_card
 
 
 --
--- TOC entry 2868 (class 2606 OID 16444)
+-- TOC entry 2867 (class 2606 OID 16444)
 -- Name: discount_card discount_card_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -185,7 +181,7 @@ ALTER TABLE ONLY public.discount_card
 
 
 --
--- TOC entry 2862 (class 2606 OID 16435)
+-- TOC entry 2861 (class 2606 OID 16435)
 -- Name: product product_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -194,7 +190,7 @@ ALTER TABLE ONLY public.product
 
 
 --
--- TOC entry 2864 (class 2606 OID 16433)
+-- TOC entry 2863 (class 2606 OID 16433)
 -- Name: product product_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -202,7 +198,7 @@ ALTER TABLE ONLY public.product
     ADD CONSTRAINT product_pkey PRIMARY KEY (product_id);
 
 
--- Completed on 2021-01-23 01:58:58
+-- Completed on 2021-02-25 01:50:20
 
 --
 -- PostgreSQL database dump complete

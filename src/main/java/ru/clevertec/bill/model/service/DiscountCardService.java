@@ -13,7 +13,7 @@ public interface DiscountCardService {
 
     List<DiscountCard> findAll() throws ServiceException;
 
-    boolean add(Map<String, String> cardParameters) throws ServiceException;
+    Optional<DiscountCard> add(Map<String, String> cardParameters) throws ServiceException;
 
     Optional<DiscountCard> edit(Map<String, String> editDiscountCardParameters, long id) throws ServiceException;
 

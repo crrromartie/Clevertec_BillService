@@ -7,7 +7,7 @@ import java.util.Map;
 public class ProductValidator {
     private static final String NAME_REGEX = "\\w{3,30}";
     private static final long MIN = 1;
-    private static final long MAX = 100;
+    private static final long MAX = 99;
 
     private ProductValidator() {
     }

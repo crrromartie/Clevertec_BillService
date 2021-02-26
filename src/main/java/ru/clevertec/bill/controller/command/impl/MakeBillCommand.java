@@ -31,16 +31,16 @@ public class MakeBillCommand implements Command {
         router.setRedirect();
         HttpSession session = request.getSession();
         ProductService productService = ServiceFactory.getINSTANCE().getProductService();
-        OrderBuilder orderBuilder = new OrderBuilderImpl();
-        Map<Long, Integer> purchaseParameters = new HashMap<>();
         try {
             List<Product> products = productService.findAll();
+            Map<Long, Integer> purchaseParameters = new HashMap<>();
             for (Product item : products) {
                 if (!request.getParameter(String.valueOf(item.getProductId())).isBlank()) {
                     purchaseParameters.put(Long.parseLong(String.valueOf(item.getProductId())),
                             Integer.parseInt(request.getParameter(String.valueOf(item.getProductId()))));
                 }
             }
+            OrderBuilder orderBuilder = new OrderBuilderImpl();
             orderBuilder.setPurchaseParameters(purchaseParameters);
             if (!request.getParameter(ParameterName.CARD_NUMBER).isBlank()) {
                 int cardNumber = Integer.parseInt(request.getParameter(ParameterName.CARD_NUMBER));

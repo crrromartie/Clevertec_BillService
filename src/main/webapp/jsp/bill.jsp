@@ -13,7 +13,12 @@
     <div class="container default-page">
         <div class="row">
             <div class="col-8 offset-2">
-                <c:if test="${bill != null}">
+                <c:if test="${bill != null && bill.getSinglePurchases().size() == 0}">
+                    <div class="message-empty">
+                        <fmt:message key="bill_page.message_empty"/>
+                    </div>
+                </c:if>
+                <c:if test="${bill != null && bill.getSinglePurchases().size() > 0}">
                     <p><c:out value="CASH RECEIPT"/></p>
                     <p><c:out value='"CandyShop"'/></p>
                     <p><c:out value="Cashier #5"/></p>

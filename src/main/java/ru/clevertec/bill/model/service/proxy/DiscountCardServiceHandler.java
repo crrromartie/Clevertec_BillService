@@ -4,8 +4,8 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ru.clevertec.bill.model.service.DiscountCardService;
-import ru.clevertec.bill.parser.CustomJsonParser;
-import ru.clevertec.bill.parser.impl.CustomJsonParserImpl;
+import ru.clevertec.custom.CustomJsonParser;
+import ru.clevertec.custom.impl.CustomJsonParserImpl;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

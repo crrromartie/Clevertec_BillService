@@ -6,8 +6,10 @@ import ru.clevertec.bill.entity.Bill;
 import ru.clevertec.bill.exception.ServiceException;
 import ru.clevertec.bill.model.service.BillService;
 import ru.clevertec.bill.model.service.ServiceFactory;
-import ru.clevertec.bill.parser.OrderDataParser;
-import ru.clevertec.bill.reader.DataReader;
+import ru.clevertec.bill.parser.TextOrderParser;
+import ru.clevertec.bill.parser.impl.TextOrderParserImpl;
+import ru.clevertec.bill.reader.FileDataReader;
+import ru.clevertec.bill.reader.impl.FileDataReaderImpl;
 import ru.clevertec.bill.util.BillConverter;
 import ru.clevertec.bill.util.FilePath;
 import ru.clevertec.bill.util.impl.BillConverterImpl;
@@ -21,12 +23,12 @@ public class Runner {
     public static void main(String[] args) throws ServiceException {
         File file = new File(FilePath.ORDER_FILE_PATH);
 
-        DataReader dataReader = new DataReader();
-        String data = dataReader.readData(file);
+        FileDataReader fileDataReader = new FileDataReaderImpl();
+        String data = fileDataReader.readData(file);
 
-        OrderDataParser orderDataParser = new OrderDataParser();
-        Map<Long, Integer> orderParameters = orderDataParser.parsOrderParameters(data);
-        int cardNumber = orderDataParser.parsCardNumber(data);
+        TextOrderParser textOrderParser = new TextOrderParserImpl();
+        Map<Long, Integer> orderParameters = textOrderParser.parsOrderParameters(data);
+        int cardNumber = textOrderParser.parsCardNumber(data);
 
         OrderBuilder orderBuilder = new OrderBuilderImpl();
         orderBuilder.setPurchaseParameters(orderParameters);

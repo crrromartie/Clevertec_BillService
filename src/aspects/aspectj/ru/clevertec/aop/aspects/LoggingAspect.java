@@ -8,16 +8,16 @@ import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import ru.clevertec.bill.annotation.LoggingAnnotation;
-import ru.clevertec.bill.annotation.LoggingLevel;
-import ru.clevertec.bill.parser.CustomJsonParser;
-import ru.clevertec.bill.parser.impl.CustomJsonParserImpl;
+import ru.clevertec.custom.CustomJsonParser;
+import ru.clevertec.custom.LoggingAnnotation;
+import ru.clevertec.custom.LoggingLevel;
+import ru.clevertec.custom.impl.CustomJsonParserImpl;
 
 @Aspect
 public class LoggingAspect {
     private static final String EMPTY_STRING = "";
 
-    @Pointcut("execution(@ru.clevertec.bill.annotation.* * *(..))")
+    @Pointcut("execution(@ru.clevertec.custom.* * *(..))")
     private void methodToBeProfiled() {
     }
 

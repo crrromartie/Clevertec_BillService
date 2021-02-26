@@ -37,9 +37,9 @@ public class DiscountCardServiceImpl implements DiscountCardService {
     }
 
     @Override
-    public boolean add(Map<String, String> cardParameters) throws ServiceException {
+    public Optional<DiscountCard> add(Map<String, String> cardParameters) throws ServiceException {
         if (!DiscountCardValidator.isCardParametersValid(cardParameters)) {
-            return false;
+            return Optional.empty();
         }
         DiscountCardBuilder discountCardBuilder = new DiscountCardBuilderImpl();
         discountCardBuilder.setCardNumber(Integer.parseInt(cardParameters.get(ParameterName.CARD_NUMBER)));

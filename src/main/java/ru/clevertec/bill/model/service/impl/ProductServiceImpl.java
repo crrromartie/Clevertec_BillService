@@ -38,9 +38,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public boolean add(Map<String, String> productParameters) throws ServiceException {
+    public Optional<Product> add(Map<String, String> productParameters) throws ServiceException {
         if (!ProductValidator.isProductParametersValid(productParameters)) {
-            return false;
+            return Optional.empty();
         }
         ProductBuilder productBuilder = new ProductBuilderImpl();
         productBuilder.setName(productParameters.get(ParameterName.PRODUCT_NAME));

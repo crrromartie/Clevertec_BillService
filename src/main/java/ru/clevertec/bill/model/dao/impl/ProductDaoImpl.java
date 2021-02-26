@@ -2,11 +2,11 @@ package ru.clevertec.bill.model.dao.impl;
 
 import ru.clevertec.bill.builder.ProductBuilder;
 import ru.clevertec.bill.builder.impl.ProductBuilderImpl;
-import ru.clevertec.bill.collection.CustomArrayList;
 import ru.clevertec.bill.entity.Product;
 import ru.clevertec.bill.exception.DaoException;
 import ru.clevertec.bill.model.dao.ProductDao;
 import ru.clevertec.bill.model.pool.ConnectionPool;
+import ru.clevertec.custom.CustomArrayList;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,7 +19,8 @@ public class ProductDaoImpl implements ProductDao {
     private static final String FIND_PRODUCT_BY_ID = "SELECT product_id, name, price, is_promo FROM product " +
             "WHERE product_id = ?";
     private static final String SELECT_ALL_PRODUCT = "SELECT product_id, name, price, is_promo FROM product";
-    private static final String ADD_PRODUCT = "INSERT INTO product (name, price) VALUES(?, ?)";
+    private static final String ADD_PRODUCT = "INSERT INTO product (name, price) VALUES(?, ?) " +
+            "RETURNING product_id, name, price, is_promo";
     private static final String UPDATE_PRODUCT = "UPDATE product SET name = ?, price = ?, is_promo = ? " +
             "WHERE product_id = ?";
     private static final String DELETE_PRODUCT_BY_ID = "DELETE FROM product WHERE product_id = ?";
@@ -28,50 +29,47 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public Optional<Product> findById(long id) throws DaoException {
-        Optional<Product> optionalProduct = Optional.empty();
-        ResultSet resultSet = null;
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(FIND_PRODUCT_BY_ID)) {
-            statement.setLong(1, id);
-            resultSet = statement.executeQuery();
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_PRODUCT_BY_ID)) {
+            preparedStatement.setLong(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            Optional<Product> optionalProduct = Optional.empty();
             if (resultSet.next()) {
-                Product product = createFromResultSet(resultSet);
-                optionalProduct = Optional.of(product);
+                optionalProduct = Optional.of(createFromResultSet(resultSet));
             }
+            return optionalProduct;
         } catch (SQLException e) {
             throw new DaoException(e);
-        } finally {
-            closeResultSet(resultSet);
         }
-        return optionalProduct;
     }
 
     @Override
     public List<Product> findAll() throws DaoException {
-        List<Product> productList = new CustomArrayList<>();
-        ResultSet resultSet = null;
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SELECT_ALL_PRODUCT)) {
-            resultSet = statement.executeQuery();
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_PRODUCT)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            List<Product> productList = new CustomArrayList<>();
             while (resultSet.next()) {
-                Product product = createFromResultSet(resultSet);
-                productList.add(product);
+                productList.add(createFromResultSet(resultSet));
             }
+            return productList;
         } catch (SQLException e) {
             throw new DaoException(e);
-        } finally {
-            closeResultSet(resultSet);
         }
-        return productList;
     }
 
     @Override
-    public boolean add(Product product) throws DaoException {
+    public Optional<Product> add(Product product) throws DaoException {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(ADD_PRODUCT)) {
-            statement.setString(1, product.getName());
-            statement.setBigDecimal(2, product.getPrice());
-            return (statement.executeUpdate() == 1);
+             PreparedStatement preparedStatement = connection.prepareStatement(ADD_PRODUCT)) {
+            preparedStatement.setString(1, product.getName());
+            preparedStatement.setBigDecimal(2, product.getPrice());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            Optional<Product> optionalProduct = Optional.empty();
+            if (resultSet.next()) {
+                optionalProduct = Optional.of(createFromResultSet(resultSet));
+            }
+            return optionalProduct;
         } catch (SQLException e) {
             throw new DaoException(e);
         }
@@ -79,37 +77,25 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public Optional<Product> edit(Product product) throws DaoException {
-        Optional<Product> optionalProduct = Optional.empty();
-        ResultSet resultSet = null;
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement updateStatment = connection.prepareStatement(UPDATE_PRODUCT);
-             PreparedStatement statement = connection.prepareStatement(FIND_PRODUCT_BY_ID)) {
-            updateStatment.setString(1, product.getName());
-            updateStatment.setBigDecimal(2, product.getPrice());
-            updateStatment.setBoolean(3, product.isPromo());
-            updateStatment.setLong(4, product.getProductId());
-            updateStatment.executeUpdate();
-
-            statement.setLong(1, product.getProductId());
-            resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                Product updatedProduct = createFromResultSet(resultSet);
-                optionalProduct = Optional.of(updatedProduct);
-            }
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_PRODUCT)) {
+            preparedStatement.setString(1, product.getName());
+            preparedStatement.setBigDecimal(2, product.getPrice());
+            preparedStatement.setBoolean(3, product.isPromo());
+            preparedStatement.setLong(4, product.getProductId());
+            preparedStatement.executeUpdate();
+            return Optional.of(product);
         } catch (SQLException e) {
             throw new DaoException(e);
-        } finally {
-            closeResultSet(resultSet);
         }
-        return optionalProduct;
     }
 
     @Override
     public void delete(long id) throws DaoException {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(DELETE_PRODUCT_BY_ID)) {
-            statement.setLong(1, id);
-            statement.executeUpdate();
+             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_PRODUCT_BY_ID)) {
+            preparedStatement.setLong(1, id);
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new DaoException(e);
         }
@@ -117,22 +103,18 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public Optional<Product> findByName(String name) throws DaoException {
-        Optional<Product> optionalProduct = Optional.empty();
-        ResultSet resultSet = null;
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(FIND_PRODUCT_BY_NAME)) {
-            statement.setString(1, name);
-            resultSet = statement.executeQuery();
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_PRODUCT_BY_NAME)) {
+            preparedStatement.setString(1, name);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            Optional<Product> optionalProduct = Optional.empty();
             if (resultSet.next()) {
-                Product product = createFromResultSet(resultSet);
-                optionalProduct = Optional.of(product);
+                optionalProduct = Optional.of(createFromResultSet(resultSet));
             }
+            return optionalProduct;
         } catch (SQLException e) {
             throw new DaoException(e);
-        } finally {
-            closeResultSet(resultSet);
         }
-        return optionalProduct;
     }
 
     private Product createFromResultSet(ResultSet resultSet) throws DaoException {

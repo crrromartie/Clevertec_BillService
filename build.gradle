@@ -1,9 +1,8 @@
 plugins {
-    id 'java'
+    id 'application'
     id 'war'
     id 'com.github.johnrengelman.shadow' version '6.1.0'
     id 'ru.clevertec.downloadPlugin' version '1.0'
-    id 'application'
 }
 
 configurations {
@@ -17,30 +16,29 @@ application {
 repositories {
     mavenLocal()
     mavenCentral()
-    maven {
-        url = uri('https://repo.maven.apache.org/maven2/')
+    flatDir {
+        dirs 'libs'
     }
 }
 
 dependencies {
     implementation 'jstl:jstl:1.2'
-    implementation 'org.jetbrains:annotations:20.1.0'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.14.0'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.14.0'
+    implementation 'com.itextpdf:itextpdf:5.5.13.2'
 
     compile group: 'org.postgresql', name: 'postgresql', version: '42.2.18'
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
+    compile group: 'com.sun.mail', name: 'javax.mail', version: '1.6.2'
+    compile group: 'org.aspectj', name: 'aspectjrt', version: '1.9.6'
+    compile group: 'org.aspectj', name: 'aspectjweaver', version: '1.9.6'
+    compile group: 'ru.clevertec', name: 'Clevertec_CustomThreadSaveCollection', version: '1.0'
+    compile group: 'ru.clevertec', name: 'Clevertec_CustomJsonParser', version: '1.0'
+    compile group: 'ru.clevertec', name: 'Clevertec_Logger_annotation', version: '1.0'
 
     compileOnly 'org.apache.tomcat:tomcat-servlet-api:9.0.37'
     compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
 
-    implementation 'com.itextpdf:itextpdf:5.5.13.2'
-    compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
-
-    implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.14.0'
-    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.14.0'
-
-    compile group: 'com.sun.mail', name: 'javax.mail', version: '1.6.2'
-
-    compile group: 'org.aspectj', name: 'aspectjrt', version: '1.9.6'
-    compile group: 'org.aspectj', name: 'aspectjweaver', version: '1.9.6'
     ajc 'org.aspectj:aspectjtools:1.9.6'
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
@@ -48,7 +46,7 @@ dependencies {
 }
 
 group = 'ru.clevertec'
-version = '1.0-SNAPSHOT'
+version = '1.0'
 description = 'Clevertec_BillService'
 java.sourceCompatibility = JavaVersion.VERSION_14
 
@@ -63,7 +61,7 @@ sourceSets {
     }
 }
 
-tasks.named('test') {
+test {
     useJUnitPlatform()
 }
 
