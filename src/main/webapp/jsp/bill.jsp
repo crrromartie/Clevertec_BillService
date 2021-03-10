@@ -34,13 +34,13 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach var="purshase" items="${bill.getSinglePurchases()}">
+                        <c:forEach var="purchase" items="${bill.getSinglePurchases()}">
                             <tr>
-                                <td><c:out value="${purshase.getQuantity()}"/></td>
-                                <td><c:out value="${purshase.getProduct().getName()}"/></td>
-                                <td><c:out value="${String.format('%.2f', purshase.getProduct().getPrice())}"/></td>
-                                <td><c:out value="${String.format('%.2f', purshase.getTotal())}"/></td>
-                                <td><c:out value="${String.format('%.2f', purshase.getPromoDiscount())}"/></td>
+                                <td><c:out value="${purchase.getQuantity()}"/></td>
+                                <td><c:out value="${purchase.getProduct().getName()}"/></td>
+                                <td><c:out value="${String.format('%.2f', purchase.getProduct().getPrice())}"/></td>
+                                <td><c:out value="${String.format('%.2f', purchase.getTotal())}"/></td>
+                                <td><c:out value="${String.format('%.2f', purchase.getPromoDiscount())}"/></td>
                             </tr>
                         </c:forEach>
                         </tbody>

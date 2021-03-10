@@ -5,7 +5,7 @@ import ru.clevertec.bill.controller.command.ParameterName;
 import java.util.Map;
 
 public class ProductValidator {
-    private static final String NAME_REGEX = "\\w{3,30}";
+    private static final String NAME_REGEX = "\\S{3,30}";
     private static final long MIN = 1;
     private static final long MAX = 99;
 

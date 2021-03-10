@@ -17,10 +17,10 @@ public class DiscountCardDaoImpl implements DiscountCardDao {
             "FROM discount_card WHERE card_id = ?";
     private static final String FIND_ALL_CARDS = "SELECT card_id, card_number, discount_percent FROM discount_card";
     private static final String ADD_CARD = "INSERT INTO discount_card (card_number, discount_percent) VALUES(?, ?)";
-    private static final String UPDATE_DISCOUNT_CARD = "UPDATE discount_card " +
+    private static final String EDIT_DISCOUNT_CARD = "UPDATE discount_card " +
             "SET card_number = ?, discount_percent = ? WHERE card_id = ?";
     private static final String DELETE_CARD_BY_ID = "DELETE FROM discount_card WHERE card_id = ?";
-    private static final String SELECT_CARD_BY_NUMBER = "SELECT card_id, card_number, discount_percent " +
+    private static final String FIND_CARD_BY_NUMBER = "SELECT card_id, card_number, discount_percent " +
             "FROM discount_card WHERE card_number = ?";
 
     @Override
@@ -76,7 +76,7 @@ public class DiscountCardDaoImpl implements DiscountCardDao {
     public Optional<DiscountCard> edit(DiscountCard discountCard) throws DaoException {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement preparedStatement = connection
-                     .prepareStatement(UPDATE_DISCOUNT_CARD)) {
+                     .prepareStatement(EDIT_DISCOUNT_CARD)) {
             preparedStatement.setInt(1, discountCard.getCardNumber());
             preparedStatement.setInt(2, discountCard.getDiscountPercent());
             preparedStatement.setLong(3, discountCard.getCardId());
@@ -101,7 +101,7 @@ public class DiscountCardDaoImpl implements DiscountCardDao {
     @Override
     public Optional<DiscountCard> findByNumber(int cardNumber) throws DaoException {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_CARD_BY_NUMBER)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_CARD_BY_NUMBER)) {
             preparedStatement.setInt(1, cardNumber);
             ResultSet resultSet = preparedStatement.executeQuery();
             Optional<DiscountCard> cardOptional = Optional.empty();

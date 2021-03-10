@@ -13,7 +13,7 @@
     <div class="container default-page">
         <div class="row">
             <div class="col-8 offset-2">
-                <c:if test="${products != null}">
+                <c:if test="${products.size() > 0}">
                     <form name="OrderForm" class="form-horizontal"
                           action="${pageContext.request.contextPath}/CandyShop" method="post">
                         <input type="hidden" name="command" value="make_bill"/>
@@ -93,6 +93,10 @@
                 <c:if test="${products.size() == 0}">
                     <div class="message-empty">
                         <fmt:message key="products_page.message_empty"/>
+                    </div>
+                    <div class="message-empty">
+                        <a href="${pageContext.request.contextPath}/CandyShop?command=add_product_pass">
+                            <fmt:message key="product_page.add"/></a>
                     </div>
                 </c:if>
             </div>

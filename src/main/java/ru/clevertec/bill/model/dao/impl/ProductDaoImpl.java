@@ -18,10 +18,10 @@ import java.util.Optional;
 public class ProductDaoImpl implements ProductDao {
     private static final String FIND_PRODUCT_BY_ID = "SELECT product_id, name, price, is_promo FROM product " +
             "WHERE product_id = ?";
-    private static final String SELECT_ALL_PRODUCT = "SELECT product_id, name, price, is_promo FROM product";
+    private static final String FIND_ALL_PRODUCT = "SELECT product_id, name, price, is_promo FROM product";
     private static final String ADD_PRODUCT = "INSERT INTO product (name, price) VALUES(?, ?) " +
             "RETURNING product_id, name, price, is_promo";
-    private static final String UPDATE_PRODUCT = "UPDATE product SET name = ?, price = ?, is_promo = ? " +
+    private static final String EDIT_PRODUCT = "UPDATE product SET name = ?, price = ?, is_promo = ? " +
             "WHERE product_id = ?";
     private static final String DELETE_PRODUCT_BY_ID = "DELETE FROM product WHERE product_id = ?";
     private static final String FIND_PRODUCT_BY_NAME = "SELECT product_id, name, price, is_promo " +
@@ -46,7 +46,7 @@ public class ProductDaoImpl implements ProductDao {
     @Override
     public List<Product> findAll() throws DaoException {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_PRODUCT)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_PRODUCT)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             List<Product> productList = new CustomArrayList<>();
             while (resultSet.next()) {
@@ -78,7 +78,7 @@ public class ProductDaoImpl implements ProductDao {
     @Override
     public Optional<Product> edit(Product product) throws DaoException {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_PRODUCT)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(EDIT_PRODUCT)) {
             preparedStatement.setString(1, product.getName());
             preparedStatement.setBigDecimal(2, product.getPrice());
             preparedStatement.setBoolean(3, product.isPromo());

@@ -13,7 +13,7 @@
     <div class="container default-page">
         <div class="row">
             <div class="col-8 offset-2">
-                <c:if test="${cards != null}">
+                <c:if test="${cards.size() > 0}">
                     <div class="col-6 offset-5">
                         <h6><fmt:message key="cards_page.card_list"/></h6>
                     </div>
