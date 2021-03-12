@@ -21,20 +21,4 @@
     <session-config>
         <session-timeout>5</session-timeout>
     </session-config>
-
-    <servlet>
-        <servlet-name>mainServlet</servlet-name>
-        <servlet-class>ru.clevertec.bill.controller.Controller</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>mainServlet</servlet-name>
-        <url-pattern>/CandyShop</url-pattern>
-    </servlet-mapping>
-
-    <listener>
-        <listener-class>ru.clevertec.bill.controller.listener.SessionListenerImpl</listener-class>
-    </listener>
-    <listener>
-        <listener-class>ru.clevertec.bill.controller.listener.SessionAttributeAddListenerImpl</listener-class>
-    </listener>
 </web-app>

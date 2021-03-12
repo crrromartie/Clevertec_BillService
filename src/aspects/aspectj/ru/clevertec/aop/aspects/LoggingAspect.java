@@ -17,15 +17,15 @@ import ru.clevertec.custom.impl.CustomJsonParserImpl;
 public class LoggingAspect {
     private static final String EMPTY_STRING = "";
 
-    @Pointcut("execution(@ru.clevertec.custom.* * *(..))")
+    @Pointcut("@annotation(ru.clevertec.custom.LoggingAnnotation)")
     private void methodToBeProfiled() {
     }
 
     @AfterReturning(pointcut = "methodToBeProfiled()", returning = "o")
     public void loginParameters(JoinPoint joinPoint, Object o) throws IllegalAccessException {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
-        LoggingAnnotation annotation = (LoggingAnnotation) methodSignature.getMethod().getAnnotation(LoggingAnnotation.class);
-        LoggingLevel level = (LoggingLevel) annotation.value();
+        LoggingAnnotation annotation = methodSignature.getMethod().getAnnotation(LoggingAnnotation.class);
+        LoggingLevel level = annotation.value();
         Logger logger = LogManager.getLogger(joinPoint.getTarget());
         CustomJsonParser parser = new CustomJsonParserImpl();
         String args = EMPTY_STRING;
@@ -33,7 +33,7 @@ public class LoggingAspect {
             parser.parseToJson(joinPoint.getArgs());
         }
         String result = EMPTY_STRING;
-        if (!o.getClass().getSimpleName().equals(void.class.getSimpleName())) {
+        if (o != null) {
             result = parser.parseToJson(o);
         }
         switch (level) {

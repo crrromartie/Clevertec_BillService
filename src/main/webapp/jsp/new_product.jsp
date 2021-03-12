@@ -18,7 +18,9 @@
                     <input type="hidden" name="command" value="add_product"/>
                     <span class="heading"><fmt:message key="product_page.add"/></span>
                     <div class="form-group">
+                        <label for="name"><fmt:message key="product_page.name"/></label>
                         <input type="text"
+                               id="name"
                                class="form-control"
                                name="name"
                                value="${productParameters.get("name")}"
@@ -31,7 +33,9 @@
                                onchange="this.setCustomValidity('')"/>
                     </div>
                     <div class="form-group">
+                        <label for="price"><fmt:message key="product_page.price"/></label>
                         <input type="number"
+                               id="price"
                                step="0.01"
                                class="form-control"
                                name="price"

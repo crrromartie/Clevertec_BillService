@@ -17,8 +17,10 @@
                       method="post">
                     <input type="hidden" name="command" value="edit_card"/>
                     <span class="heading"><fmt:message key="card_page.edit_card"/></span>
+                    <label for="name"><fmt:message key="card_page.card_number"/></label>
                     <div class="form-group">
                         <input type="number"
+                               id="name"
                                class="form-control"
                                name="cardNumber"
                                value="${card.getCardNumber()}"
@@ -32,7 +34,9 @@
                                onchange="this.setCustomValidity('')"/>
                     </div>
                     <div class="form-group">
+                        <label for="number"><fmt:message key="card_page.discount_percent"/></label>
                         <input type="number"
+                               id="number"
                                class="form-control"
                                name="cardDiscountPercent"
                                value="${card.getDiscountPercent()}"

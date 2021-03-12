@@ -8,10 +8,12 @@ import ru.clevertec.bill.exception.ServiceException;
 import ru.clevertec.bill.model.service.MailService;
 import ru.clevertec.bill.model.service.ServiceFactory;
 
+import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionAttributeListener;
 import javax.servlet.http.HttpSessionBindingEvent;
 
+@WebListener
 public class SessionAttributeAddListenerImpl implements HttpSessionAttributeListener {
     static Logger logger = LogManager.getLogger();
 
