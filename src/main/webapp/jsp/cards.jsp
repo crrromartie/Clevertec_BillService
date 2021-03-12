@@ -36,7 +36,7 @@
                                 <td><c:out value="${card.getDiscountPercent()}"/></td>
                                 <td>
                                     <form name="DeleteCard" action="${pageContext.request.contextPath}/CandyShop"
-                                          method="get">
+                                          method="post">
                                         <input type="hidden" name="command" value="delete_card"/>
                                         <input type="hidden" name="cardId" value="${card.getCardId()}"/>
                                         <button type="submit" class="submit-button" id="delButt">

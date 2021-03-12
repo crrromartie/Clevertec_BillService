@@ -22,10 +22,13 @@ public class DownloadPlugin implements Plugin<Project> {
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
-            try (ReadableByteChannel readableByteChannel = Channels.newChannel(url.openStream());
-                 FileOutputStream fileOutputStream = new FileOutputStream(extension.getTargetFile());
-                 FileChannel fileChannel = fileOutputStream.getChannel()) {
-                fileChannel.transferFrom(readableByteChannel, POSITION_0, Long.MAX_VALUE);
+            try {
+                assert url != null;
+                try (ReadableByteChannel readableByteChannel = Channels.newChannel(url.openStream());
+                         FileOutputStream fileOutputStream = new FileOutputStream(extension.getTargetFile());
+                         FileChannel fileChannel = fileOutputStream.getChannel()) {
+                    fileChannel.transferFrom(readableByteChannel, POSITION_0, Long.MAX_VALUE);
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }

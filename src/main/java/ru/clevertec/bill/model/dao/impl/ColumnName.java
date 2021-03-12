@@ -5,7 +5,7 @@ class ColumnName {
     public static final String PRODUCT_ID = "product_id";
     public static final String PRODUCT_NAME = "name";
     public static final String PRODUCT_PRICE = "price";
-    public static final String PRODUCT_IS_PROMO = "is_promo";
+    public static final String PRODUCT_IS_PROMO = "promo";
     //table 'discountCards'
     public static final String CARD_ID = "card_id";
     public static final String CARD_NUMBER = "card_number";

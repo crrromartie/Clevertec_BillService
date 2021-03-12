@@ -2,7 +2,9 @@
 <Configuration status="WARN">
 
     <Properties>
-        <property name="log_dir">c:/Users/IGOR/IdeaProjects/Clevertec_BillService/logs</property>
+        <property name="log_dir">
+            c:/Users/IGOR/IdeaProjects/Clevertec_BillService/logs
+        </property>
         <property name="pattern_console">
             %d{ABSOLUTE} %-5level %logger{1} - %msg%n
         </property>
@@ -10,7 +12,7 @@
             %d{ISO8601} %-5level %logger{} - %msg%n
         </property>
         <property name="pattern_log_dir">
-            logs/${date:yyyy-MM-dd}%d{yyyy-MM-dd_HH-mm}_%i.log
+            c:/Users/IGOR/IdeaProjects/Clevertec_BillService/logs/${date:yyyy-MM-dd}%d{yyyy-MM-dd_HH-mm}_%i.log
         </property>
     </Properties>
 

@@ -57,8 +57,7 @@
                     </c:choose>
                     <p><c:out value="TOTAL FOR PAY: ${String.format('%.2f', bill.getTotalForPay())}"/></p>
                     <form name="SaveBill"
-                          action="${pageContext.request.contextPath}/CandyShop"
-                          method="post">
+                          action="${pageContext.request.contextPath}/CandyShop" method="get">
                         <input type="hidden" name="command" value="write_bill"/>
                         <input type="hidden" name="writing_format" value="txt">
                         <button type="submit" class="butt">
@@ -66,8 +65,7 @@
                         </button>
                     </form>
                     <form name="SaveBillToPDF"
-                          action="${pageContext.request.contextPath}/CandyShop"
-                          method="post">
+                          action="${pageContext.request.contextPath}/CandyShop" method="get">
                         <input type="hidden" name="command" value="write_bill"/>
                         <input type="hidden" name="writing_format" value="pdf">
                         <button type="submit" class="butt">
@@ -75,8 +73,7 @@
                         </button>
                     </form>
                     <form name="SaveBillToPDFTemplate"
-                          action="${pageContext.request.contextPath}/CandyShop"
-                          method="post">
+                          action="${pageContext.request.contextPath}/CandyShop" method="get">
                         <input type="hidden" name="command" value="write_bill"/>
                         <input type="hidden" name="writing_format" value="pdf_clevertec">
                         <button type="submit" class="butt">

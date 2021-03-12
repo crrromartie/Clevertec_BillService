@@ -9,7 +9,7 @@ public class ProductBuilderImpl implements ProductBuilder {
     private long productId;
     private String name;
     private BigDecimal price;
-    private boolean isPromo;
+    private boolean promo;
 
     @Override
     public void setProductId(long productId) {
@@ -28,11 +28,11 @@ public class ProductBuilderImpl implements ProductBuilder {
 
     @Override
     public void setPromo(boolean promo) {
-        isPromo = promo;
+        this.promo = promo;
     }
 
     @Override
     public Product getProduct() {
-        return new Product(productId, name, price, isPromo);
+        return new Product(productId, name, price, promo);
     }
 }

@@ -7,48 +7,51 @@ public class Product extends Entity {
     private long productId;
     private String name;
     private BigDecimal price;
-    private boolean isPromo;
+    private boolean promo;
 
     public Product() {
     }
 
-    public Product(long productId, String name, BigDecimal price, boolean isPromo) {
+    public Product(long productId,
+                   String name,
+                   BigDecimal price,
+                   boolean promo) {
         this.productId = productId;
         this.name = name;
         this.price = price;
-        this.isPromo = isPromo;
+        this.promo = promo;
     }
 
     public long getProductId() {
         return productId;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public boolean isPromo() {
-        return isPromo;
-    }
-
     public void setProductId(long productId) {
         this.productId = productId;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
+    public BigDecimal getPrice() {
+        return price;
+    }
+
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
+    public boolean isPromo() {
+        return promo;
+    }
+
     public void setPromo(boolean promo) {
-        isPromo = promo;
+        this.promo = promo;
     }
 
     @Override
@@ -63,7 +66,7 @@ public class Product extends Entity {
         if (productId != product.productId) {
             return false;
         }
-        if (isPromo != product.isPromo) {
+        if (promo != product.promo) {
             return false;
         }
         if (name != null ? !name.equals(product.name) : product.name != null) {
@@ -77,7 +80,7 @@ public class Product extends Entity {
         int result = (int) (productId ^ (productId >>> 32));
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (price != null ? price.hashCode() : 0);
-        result = 31 * result + (isPromo ? 1 : 0);
+        result = 31 * result + (promo ? 1 : 0);
         return result;
     }
 
@@ -87,7 +90,7 @@ public class Product extends Entity {
                 .add("productId=" + productId)
                 .add("name='" + name + "'")
                 .add("price=" + price)
-                .add("isPromo=" + isPromo)
+                .add("promo=" + promo)
                 .toString();
     }
 }

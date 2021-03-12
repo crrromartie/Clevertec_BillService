@@ -16,15 +16,15 @@ import java.util.List;
 import java.util.Optional;
 
 public class ProductDaoImpl implements ProductDao {
-    private static final String FIND_PRODUCT_BY_ID = "SELECT product_id, name, price, is_promo FROM product " +
+    private static final String FIND_PRODUCT_BY_ID = "SELECT product_id, name, price, promo FROM product " +
             "WHERE product_id = ?";
-    private static final String FIND_ALL_PRODUCT = "SELECT product_id, name, price, is_promo FROM product";
+    private static final String FIND_ALL_PRODUCT = "SELECT product_id, name, price, promo FROM product";
     private static final String ADD_PRODUCT = "INSERT INTO product (name, price) VALUES(?, ?) " +
-            "RETURNING product_id, name, price, is_promo";
-    private static final String EDIT_PRODUCT = "UPDATE product SET name = ?, price = ?, is_promo = ? " +
+            "RETURNING product_id, name, price, promo";
+    private static final String EDIT_PRODUCT = "UPDATE product SET name = ?, price = ?, promo = ? " +
             "WHERE product_id = ?";
     private static final String DELETE_PRODUCT_BY_ID = "DELETE FROM product WHERE product_id = ?";
-    private static final String FIND_PRODUCT_BY_NAME = "SELECT product_id, name, price, is_promo " +
+    private static final String FIND_PRODUCT_BY_NAME = "SELECT product_id, name, price, promo " +
             "FROM product WHERE name = ?";
 
     @Override

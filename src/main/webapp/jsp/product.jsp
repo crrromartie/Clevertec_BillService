@@ -18,11 +18,6 @@
                     <input type="hidden" name="command" value="edit_product"/>
                     <span class="heading"><fmt:message key="product_page.edit_product"/></span>
                     <div class="form-group">
-                        <a class="form-link"
-                           href="${pageContext.request.contextPath}/CandyShop?command=delete_product&productId=${product.getProductId()}">
-                            <fmt:message key="product_page.delete"/></a>
-                    </div>
-                    <div class="form-group">
                         <label for="name"><fmt:message key="product_page.name"/></label>
                         <input type="text"
                                id="name"
@@ -68,6 +63,13 @@
                             <fmt:message key="product_page.submit"/>
                         </button>
                     </div>
+                </form>
+                <form name="DeleteProduct" action="${pageContext.request.contextPath}/CandyShop" method="post">
+                    <input type="hidden" name="command" value="delete_product"/>
+                    <input type="hidden" name="cardId" value="${product.getProductId()}"/>
+                    <button type="submit" class="submit-button" id="delButt">
+                        <fmt:message key="product_page.delete"/>
+                    </button>
                 </form>
                 <c:if test="${uniqueProductNameError}">
                     <div class="form-group">
