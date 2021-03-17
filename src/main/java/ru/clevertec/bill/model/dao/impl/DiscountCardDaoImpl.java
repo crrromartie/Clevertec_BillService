@@ -14,14 +14,14 @@ import java.util.Optional;
 
 public class DiscountCardDaoImpl implements DiscountCardDao {
     private static final String FIND_CARD_BY_ID = "SELECT card_id, card_number, discount_percent " +
-            "FROM discount_card WHERE card_id = ?";
-    private static final String FIND_ALL_CARDS = "SELECT card_id, card_number, discount_percent FROM discount_card";
-    private static final String ADD_CARD = "INSERT INTO discount_card (card_number, discount_percent) VALUES(?, ?)";
-    private static final String EDIT_DISCOUNT_CARD = "UPDATE discount_card " +
+            "FROM discount_cards WHERE card_id = ?";
+    private static final String FIND_ALL_CARDS = "SELECT card_id, card_number, discount_percent FROM discount_cards";
+    private static final String ADD_CARD = "INSERT INTO discount_cards (card_number, discount_percent) VALUES(?, ?)";
+    private static final String EDIT_DISCOUNT_CARD = "UPDATE discount_cards " +
             "SET card_number = ?, discount_percent = ? WHERE card_id = ?";
-    private static final String DELETE_CARD_BY_ID = "DELETE FROM discount_card WHERE card_id = ?";
+    private static final String DELETE_CARD_BY_ID = "DELETE FROM discount_cards WHERE card_id = ?";
     private static final String FIND_CARD_BY_NUMBER = "SELECT card_id, card_number, discount_percent " +
-            "FROM discount_card WHERE card_number = ?";
+            "FROM discount_cards WHERE card_number = ?";
 
     @Override
     public Optional<DiscountCard> findById(long id) throws DaoException {

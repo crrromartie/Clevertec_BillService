@@ -19,8 +19,6 @@ import java.util.Optional;
 public class EditCardCommand implements Command {
     static Logger logger = LogManager.getLogger();
 
-    private static final String CARD_ID_PARAMETER = "&cardId=";
-
     @Override
     public Router execute(HttpServletRequest request) {
         Router router = new Router();
@@ -38,9 +36,7 @@ public class EditCardCommand implements Command {
                 if (optionalDiscountCard.isPresent()) {
                     router.setPage(new StringBuilder()
                             .append(request.getContextPath())
-                            .append(CommandPath.CARD_PASS)
-                            .append(CARD_ID_PARAMETER)
-                            .append(card.getCardId()).toString());
+                            .append(CommandPath.CARDS_PASS).toString());
                     router.setRedirect();
                 } else {
                     request.setAttribute(AttributeName.INCORRECT_CARD_DATA, true);

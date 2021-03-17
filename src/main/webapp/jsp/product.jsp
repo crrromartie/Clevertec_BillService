@@ -66,7 +66,7 @@
                 </form>
                 <form name="DeleteProduct" action="${pageContext.request.contextPath}/CandyShop" method="post">
                     <input type="hidden" name="command" value="delete_product"/>
-                    <input type="hidden" name="cardId" value="${product.getProductId()}"/>
+                    <input type="hidden" name="productId" value="${product.getProductId()}"/>
                     <button type="submit" class="submit-button" id="delButt">
                         <fmt:message key="product_page.delete"/>
                     </button>

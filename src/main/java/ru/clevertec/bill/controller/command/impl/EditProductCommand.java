@@ -19,8 +19,6 @@ import java.util.Optional;
 public class EditProductCommand implements Command {
     static Logger logger = LogManager.getLogger();
 
-    private static final String PRODUCT_ID_PARAMETER = "&productId=";
-
     @Override
     public Router execute(HttpServletRequest request) {
         Router router = new Router();
@@ -35,9 +33,7 @@ public class EditProductCommand implements Command {
                 if (optionalProduct.isPresent()) {
                     router.setPage(new StringBuilder()
                             .append(request.getContextPath())
-                            .append(CommandPath.PRODUCT_PASS)
-                            .append(PRODUCT_ID_PARAMETER)
-                            .append(product.getProductId()).toString());
+                            .append(CommandPath.PRODUCTS_PASS).toString());
                     router.setRedirect();
                 } else {
                     request.setAttribute(AttributeName.INCORRECT_PRODUCT_DATA, true);
