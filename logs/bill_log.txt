@@ -75,3 +75,10 @@
 2021-03-17T20:59:29,577 ERROR ru.clevertec.bill.controller.listener.SessionAttributeAddListenerImpl - javax.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not accepted. Learn more at
 535 5.7.8  https://support.google.com/mail/?p=BadCredentials g5sm3584749ljj.21 - gsmtp
 
+2021-03-24T00:01:15,107 DEBUG ru.clevertec.bill.model.service.ProductService - findAll args=
+2021-03-24T00:01:15,157 DEBUG ru.clevertec.bill.model.service.ProductService - findAll result=[{"productId":4,"name":"Spartak","price":8.7,"promo":false},{"productId":6,"name":"KitKat","price":9.6,"promo":false},{"productId":55,"name":"Smack","price":3.5,"promo":true},{"productId":2,"name":"Snickers","price":10.55,"promo":false},{"productId":3,"name":"Nuts","price":11.5,"promo":false},{"productId":44,"name":"Corny","price":4.0,"promo":true},{"productId":1,"name":"Mars","price":13.17,"promo":false},{"productId":7,"name":"MilkyWay","price":8.5,"promo":false}]
+2021-03-24T00:01:20,996 DEBUG ru.clevertec.bill.model.service.ProductService - findAll args=
+2021-03-24T00:01:20,996 DEBUG ru.clevertec.bill.model.service.ProductService - findAll result=[{"productId":4,"name":"Spartak","price":8.7,"promo":false},{"productId":6,"name":"KitKat","price":9.6,"promo":false},{"productId":55,"name":"Smack","price":3.5,"promo":true},{"productId":2,"name":"Snickers","price":10.55,"promo":false},{"productId":3,"name":"Nuts","price":11.5,"promo":false},{"productId":44,"name":"Corny","price":4.0,"promo":true},{"productId":1,"name":"Mars","price":13.17,"promo":false},{"productId":7,"name":"MilkyWay","price":8.5,"promo":false}]
+2021-03-24T00:01:24,303 ERROR ru.clevertec.bill.controller.listener.SessionAttributeAddListenerImpl - javax.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not accepted. Learn more at
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials p17sm38407wmq.47 - gsmtp
+

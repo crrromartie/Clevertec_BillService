@@ -1,0 +1,10 @@
+CASH RECEIPT
+"CandyShop"
+CASHIER #5
+24/03/2021 Wed 00:01:21
+QTY   DESCRIPTION   PRICE   TOTAL   PROMO
+5     Spartak       8,70    43,50   0,00    
+8     Corny         4,00    28,80   3,20    
+PROMO DISCOUNT: 3,20
+NO DISCOUNT CARD
+TOTAL FOR PAY: 72,30
